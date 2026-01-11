@@ -42,6 +42,7 @@ Aplikasi ini menggunakan [Filament Shield](https://filamentphp.com/plugins/bezha
 - **Role Management**: Kelola role dan permissions melalui Filament panel
 - **Permission Management**: Kontrol akses granular untuk Resources, Pages, dan Widgets
 - **Policy-based Authorization**: Otomatis generate policies untuk setiap resource
+- **Activity Log**: Track semua perubahan pada user (create, update, delete)
 
 ### Login Super Admin:
 
@@ -60,6 +61,18 @@ Buka browser dan akses: `http://localhost/auth/login`
 | `admin` | Administrator | Kelola users (CRUD lengkap) |
 | `staff` | Staff | Hanya lihat users (read-only) |
 
+### Activity Log:
+
+Setiap perubahan pada user akan tercatat di activity log. Akses melalui:
+1. Menu Users → Klik icon "Activity Log" pada user yang ingin dilihat
+2. Atau akses langsung: `/auth/users/{id}/activities`
+
+Activity log mencatat:
+- Event (created, updated, deleted)
+- Perubahan data (old value vs new value)
+- Timestamp
+- User yang melakukan perubahan (causer)
+
 ### Quick Commands:
 
 ```bash
@@ -74,6 +87,9 @@ php artisan shield:super-admin --panel=auth
 
 # Seed roles & permissions
 php artisan db:seed --class=RolePermissionSeeder
+
+# Build assets (required setelah setup activity log)
+npm run build
 ```
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.

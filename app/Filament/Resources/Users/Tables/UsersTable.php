@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\Users\Tables;
 
+use App\Filament\Resources\Users\UserResource;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -43,6 +45,10 @@ class UsersTable
             ])
             ->recordActions([
                 EditAction::make(),
+                Action::make('activities')
+                    ->label('Activity Log')
+                    ->icon('heroicon-o-clipboard-document-list')
+                    ->url(fn ($record) => UserResource::getUrl('activities', ['record' => $record])),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

@@ -1,0 +1,5 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+@import '../../../../vendor/pxlrbt/filament-activity-log/resources/css/styles.css';
