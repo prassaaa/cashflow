@@ -21,6 +21,63 @@ Laravel is a web application framework with expressive, elegant syntax. We belie
 
 Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
+## Filament Shield - Role & Permission Management
+
+Aplikasi ini menggunakan [Filament Shield](https://filamentphp.com/plugins/bezhansalleh-shield) untuk manajemen hak akses, role, dan permissions.
+
+### 📚 Dokumentasi
+
+**[📖 Documentation Index](DOCUMENTATION_INDEX.md)** - Navigasi lengkap semua dokumentasi
+
+**Quick Links**:
+- **[Quick Start Guide](QUICK_START.md)** - Panduan cepat untuk memulai
+- **[Panduan Lengkap](FILAMENT_SHIELD_GUIDE.md)** - Dokumentasi lengkap Filament Shield
+- **[Contoh Penggunaan](PERMISSION_EXAMPLES.md)** - Contoh code untuk menggunakan permissions
+- **[FAQ](FAQ.md)** - Pertanyaan umum & troubleshooting
+- **[Architecture](ARCHITECTURE.md)** - Diagram & arsitektur sistem
+
+### Fitur yang Tersedia:
+
+- **User Management**: CRUD lengkap untuk user dengan assignment role
+- **Role Management**: Kelola role dan permissions melalui Filament panel
+- **Permission Management**: Kontrol akses granular untuk Resources, Pages, dan Widgets
+- **Policy-based Authorization**: Otomatis generate policies untuk setiap resource
+
+### Login Super Admin:
+
+- Email: `superadmin@example.com`
+- Password: `password`
+
+### Akses Panel:
+
+Buka browser dan akses: `http://localhost/auth/login`
+
+### Roles yang Tersedia:
+
+| Role | Deskripsi | Permissions |
+|------|-----------|-------------|
+| `super_admin` | Super Administrator | Semua akses (bypass all checks) |
+| `admin` | Administrator | Kelola users (CRUD lengkap) |
+| `staff` | Staff | Hanya lihat users (read-only) |
+
+### Quick Commands:
+
+```bash
+# Generate permissions untuk resource baru
+php artisan shield:generate --resource=NamaResource --panel=auth
+
+# Generate permissions untuk semua resources
+php artisan shield:generate --all --panel=auth
+
+# Buat super admin baru
+php artisan shield:super-admin --panel=auth
+
+# Seed roles & permissions
+php artisan db:seed --class=RolePermissionSeeder
+```
+
+Laravel is accessible, powerful, and provides tools required for large, robust applications.
+
 ## Learning Laravel
 
 Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
