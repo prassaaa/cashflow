@@ -15,15 +15,17 @@ class UserForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Alamat Email')
                     ->email()
                     ->required()
                     ->maxLength(255)
                     ->unique(ignoreRecord: true),
                 TextInput::make('password')
+                    ->label('Kata Sandi')
                     ->password()
                     ->dehydrateStateUsing(fn ($state) => Hash::make($state))
                     ->dehydrated(fn ($state) => filled($state))
@@ -36,9 +38,9 @@ class UserForm
                     ->searchable()
                     ->noSearchResultsMessage('Tidak ada role yang ditemukan')
                     ->noOptionsMessage('Tidak ada role tersedia')
-                    ->label('Roles'),
+                    ->label('Peran'),
                 DateTimePicker::make('email_verified_at')
-                    ->label('Email Verified At'),
+                    ->label('Email Terverifikasi Pada'),
             ]);
     }
 }
