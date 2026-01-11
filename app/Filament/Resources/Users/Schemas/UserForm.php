@@ -34,6 +34,8 @@ class UserForm
                     ->multiple()
                     ->preload()
                     ->searchable()
+                    ->noSearchResultsMessage('Tidak ada role yang ditemukan')
+                    ->noOptionsMessage('Tidak ada role tersedia')
                     ->label('Roles'),
                 DateTimePicker::make('email_verified_at')
                     ->label('Email Verified At'),
