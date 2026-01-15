@@ -30,10 +30,9 @@ class EmployeeForm
                             ->label('Tipe')
                             ->required()
                             ->options([
-                                'permanent' => 'Tetap',
+                                'staff' => 'Staff Tetap',
                                 'contract' => 'Kontrak',
                                 'daily' => 'Harian',
-                                'freelance' => 'Freelance',
                             ])
                             ->native(false),
                         TextInput::make('position')
@@ -45,11 +44,11 @@ class EmployeeForm
                             ->required()
                             ->options([
                                 'production' => 'Produksi',
-                                'sales' => 'Sales',
+                                'marketing' => 'Marketing',
                                 'purchasing' => 'Purchasing',
-                                'finance' => 'Keuangan',
+                                'accounting' => 'Accounting',
                                 'hrd' => 'HRD',
-                                'management' => 'Management',
+                                'warehouse' => 'Warehouse',
                             ])
                             ->native(false),
                         Select::make('status')

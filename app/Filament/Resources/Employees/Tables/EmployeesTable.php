@@ -32,16 +32,16 @@ class EmployeesTable
                     ->label('Tipe')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'permanent' => 'success',
+                        'staff' => 'success',
                         'contract' => 'info',
                         'daily' => 'warning',
-                        'freelance' => 'gray',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'permanent' => 'Tetap',
+                        'staff' => 'Staff Tetap',
                         'contract' => 'Kontrak',
                         'daily' => 'Harian',
-                        'freelance' => 'Freelance',
+                        default => $state,
                     }),
                 TextColumn::make('position')
                     ->label('Jabatan')
@@ -49,13 +49,14 @@ class EmployeesTable
                 TextColumn::make('department')
                     ->label('Departemen')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
                         'production' => 'Produksi',
-                        'sales' => 'Sales',
+                        'marketing' => 'Marketing',
                         'purchasing' => 'Purchasing',
-                        'finance' => 'Keuangan',
+                        'accounting' => 'Accounting',
                         'hrd' => 'HRD',
-                        'management' => 'Management',
+                        'warehouse' => 'Warehouse',
+                        default => $state ?? '-',
                     }),
                 TextColumn::make('base_salary')
                     ->label('Gaji Pokok')
