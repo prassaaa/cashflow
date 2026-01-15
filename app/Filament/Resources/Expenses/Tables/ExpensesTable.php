@@ -34,14 +34,7 @@ class ExpensesTable
                 TextColumn::make('category')
                     ->label('Kategori')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'operational' => 'Operasional',
-                        'material' => 'Material',
-                        'transport' => 'Transportasi',
-                        'utility' => 'Utilitas',
-                        'maintenance' => 'Perawatan',
-                        'other' => 'Lainnya',
-                    }),
+                    ->searchable(),
                 TextColumn::make('amount')
                     ->label('Jumlah')
                     ->money('IDR')

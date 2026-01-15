@@ -34,14 +34,7 @@ class OtherCostsTable
                 TextColumn::make('category')
                     ->label('Kategori')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'shipping' => 'Pengiriman',
-                        'insurance' => 'Asuransi',
-                        'tax' => 'Pajak',
-                        'permit' => 'Perizinan',
-                        'consultant' => 'Konsultan',
-                        'misc' => 'Lain-lain',
-                    }),
+                    ->searchable(),
                 TextColumn::make('amount')
                     ->label('Jumlah')
                     ->money('IDR')
