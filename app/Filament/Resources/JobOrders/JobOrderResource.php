@@ -5,6 +5,14 @@ namespace App\Filament\Resources\JobOrders;
 use App\Filament\Resources\JobOrders\Pages\CreateJobOrder;
 use App\Filament\Resources\JobOrders\Pages\EditJobOrder;
 use App\Filament\Resources\JobOrders\Pages\ListJobOrders;
+use App\Filament\Resources\JobOrders\RelationManagers\DeliveriesRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\ExpensesRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\InvoicesRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\ManPowersRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\OtherCostsRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\ProductionProgressRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\PurchaseOrdersRelationManager;
+use App\Filament\Resources\JobOrders\RelationManagers\SalariesRelationManager;
 use App\Filament\Resources\JobOrders\Schemas\JobOrderForm;
 use App\Filament\Resources\JobOrders\Tables\JobOrdersTable;
 use App\Models\JobOrder;
@@ -46,7 +54,14 @@ class JobOrderResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            PurchaseOrdersRelationManager::class,
+            ExpensesRelationManager::class,
+            SalariesRelationManager::class,
+            InvoicesRelationManager::class,
+            DeliveriesRelationManager::class,
+            ManPowersRelationManager::class,
+            ProductionProgressRelationManager::class,
+            OtherCostsRelationManager::class,
         ];
     }
 
