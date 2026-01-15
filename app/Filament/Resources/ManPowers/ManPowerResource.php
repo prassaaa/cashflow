@@ -15,12 +15,23 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class ManPowerResource extends Resource
 {
     protected static ?string $model = ManPower::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+
+    protected static string|UnitEnum|null $navigationGroup = 'HRD';
+
+    protected static ?int $navigationSort = 2;
+
+    protected static ?string $modelLabel = 'Tenaga Kerja';
+
+    protected static ?string $pluralModelLabel = 'Tenaga Kerja';
+
+    protected static ?string $navigationLabel = 'Tenaga Kerja';
 
     public static function form(Schema $schema): Schema
     {

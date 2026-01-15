@@ -15,12 +15,23 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class ExpenseResource extends Resource
 {
     protected static ?string $model = Expense::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBanknotes;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Keuangan';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Pengeluaran';
+
+    protected static ?string $pluralModelLabel = 'Pengeluaran';
+
+    protected static ?string $navigationLabel = 'Pengeluaran';
 
     public static function form(Schema $schema): Schema
     {

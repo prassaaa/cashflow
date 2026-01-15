@@ -15,12 +15,23 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class InvoiceResource extends Resource
 {
     protected static ?string $model = Invoice::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Keuangan';
+
+    protected static ?int $navigationSort = 3;
+
+    protected static ?string $modelLabel = 'Invoice';
+
+    protected static ?string $pluralModelLabel = 'Invoices';
+
+    protected static ?string $navigationLabel = 'Invoice';
 
     public static function form(Schema $schema): Schema
     {

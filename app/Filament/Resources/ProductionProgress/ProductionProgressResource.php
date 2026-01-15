@@ -15,12 +15,23 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use UnitEnum;
 
 class ProductionProgressResource extends Resource
 {
     protected static ?string $model = ProductionProgress::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCog6Tooth;
+
+    protected static string|UnitEnum|null $navigationGroup = 'Produksi';
+
+    protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Progress Produksi';
+
+    protected static ?string $pluralModelLabel = 'Progress Produksi';
+
+    protected static ?string $navigationLabel = 'Progress Produksi';
 
     public static function form(Schema $schema): Schema
     {
