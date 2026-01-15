@@ -11,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use pxlrbt\FilamentExcel\Actions\Tables\ExportAction;
 use pxlrbt\FilamentExcel\Actions\Tables\ExportBulkAction;
 
 class ManPowersTable
@@ -70,8 +71,9 @@ class ManPowersTable
                 EditAction::make(),
             ])
             ->toolbarActions([
+                ExportAction::make()->label('Export Excel'),
                 BulkActionGroup::make([
-                    ExportBulkAction::make()->label('Export Excel'),
+                    ExportBulkAction::make()->label('Export Selected'),
                     DeleteBulkAction::make(),
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
