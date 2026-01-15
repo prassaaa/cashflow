@@ -26,8 +26,8 @@ class DatabaseSeeder extends Seeder
         $superAdmin->assignRole('super_admin');
 
         // Create test users for each role
-        $roles = ['management', 'sales', 'purchasing', 'finance', 'hrd', 'production'];
-        
+        $roles = ['hrd', 'marketing', 'purchasing', 'accounting', 'ppic'];
+
         foreach ($roles as $role) {
             $user = User::factory()->create([
                 'name' => ucfirst($role) . ' User',

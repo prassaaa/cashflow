@@ -61,27 +61,22 @@ class RolesAndPermissionsSeeder extends Seeder
         $rolePermissions = [
             'super_admin' => '*', // All permissions
 
-            'management' => [
-                // View only for all modules
+            'hrd' => [
+                // Full CRUD for Employee, ManPower, Salary
+                'ViewAny:Employee', 'View:Employee', 'Create:Employee', 'Update:Employee', 'Delete:Employee',
+                'ViewAny:ManPower', 'View:ManPower', 'Create:ManPower', 'Update:ManPower', 'Delete:ManPower',
+                'ViewAny:Salary', 'View:Salary', 'Create:Salary', 'Update:Salary', 'Delete:Salary',
+                // View only for JobOrder
                 'ViewAny:JobOrder', 'View:JobOrder',
-                'ViewAny:PurchaseOrder', 'View:PurchaseOrder',
-                'ViewAny:Expense', 'View:Expense',
-                'ViewAny:Salary', 'View:Salary',
-                'ViewAny:Invoice', 'View:Invoice',
-                'ViewAny:Delivery', 'View:Delivery',
-                'ViewAny:ManPower', 'View:ManPower',
-                'ViewAny:ProductionProgress', 'View:ProductionProgress',
-                'ViewAny:Employee', 'View:Employee',
-                'ViewAny:OtherCost', 'View:OtherCost',
             ],
 
-            'sales' => [
-                // Full CRUD for JobOrder
+            'marketing' => [
+                // Full CRUD for JobOrder, Invoice, Delivery
                 'ViewAny:JobOrder', 'View:JobOrder', 'Create:JobOrder', 'Update:JobOrder', 'Delete:JobOrder',
+                'ViewAny:Invoice', 'View:Invoice', 'Create:Invoice', 'Update:Invoice', 'Delete:Invoice',
+                'ViewAny:Delivery', 'View:Delivery', 'Create:Delivery', 'Update:Delivery', 'Delete:Delivery',
                 // View only for related modules
                 'ViewAny:PurchaseOrder', 'View:PurchaseOrder',
-                'ViewAny:Invoice', 'View:Invoice',
-                'ViewAny:Delivery', 'View:Delivery',
                 'ViewAny:ProductionProgress', 'View:ProductionProgress',
             ],
 
@@ -92,34 +87,29 @@ class RolesAndPermissionsSeeder extends Seeder
                 'ViewAny:JobOrder', 'View:JobOrder',
             ],
 
-            'finance' => [
-                // Full CRUD for Expense, Salary, Invoice, Delivery, OtherCost
+            'accounting' => [
+                // Full CRUD for Expense, Invoice, OtherCost
                 'ViewAny:Expense', 'View:Expense', 'Create:Expense', 'Update:Expense', 'Delete:Expense',
-                'ViewAny:Salary', 'View:Salary', 'Create:Salary', 'Update:Salary', 'Delete:Salary',
                 'ViewAny:Invoice', 'View:Invoice', 'Create:Invoice', 'Update:Invoice', 'Delete:Invoice',
-                'ViewAny:Delivery', 'View:Delivery', 'Create:Delivery', 'Update:Delivery', 'Delete:Delivery',
                 'ViewAny:OtherCost', 'View:OtherCost', 'Create:OtherCost', 'Update:OtherCost', 'Delete:OtherCost',
+                // View for Salary (untuk verifikasi pembayaran)
+                'ViewAny:Salary', 'View:Salary',
                 // View only for JobOrder
                 'ViewAny:JobOrder', 'View:JobOrder',
                 // View only for Employee (for salary reference)
                 'ViewAny:Employee', 'View:Employee',
+                // View for Delivery
+                'ViewAny:Delivery', 'View:Delivery',
             ],
 
-            'hrd' => [
-                // Full CRUD for Employee, ManPower
-                'ViewAny:Employee', 'View:Employee', 'Create:Employee', 'Update:Employee', 'Delete:Employee',
-                'ViewAny:ManPower', 'View:ManPower', 'Create:ManPower', 'Update:ManPower', 'Delete:ManPower',
-                // View only for JobOrder, Salary
-                'ViewAny:JobOrder', 'View:JobOrder',
-                'ViewAny:Salary', 'View:Salary',
-            ],
-
-            'production' => [
-                // Full CRUD for ProductionProgress
+            'ppic' => [
+                // Full CRUD for ProductionProgress, ManPower
                 'ViewAny:ProductionProgress', 'View:ProductionProgress', 'Create:ProductionProgress', 'Update:ProductionProgress', 'Delete:ProductionProgress',
-                // View only for JobOrder, ManPower
+                'ViewAny:ManPower', 'View:ManPower', 'Create:ManPower', 'Update:ManPower', 'Delete:ManPower',
+                // View only for JobOrder, PurchaseOrder, Delivery
                 'ViewAny:JobOrder', 'View:JobOrder',
-                'ViewAny:ManPower', 'View:ManPower',
+                'ViewAny:PurchaseOrder', 'View:PurchaseOrder',
+                'ViewAny:Delivery', 'View:Delivery',
             ],
         ];
 
