@@ -61,22 +61,24 @@ class SalariesTable
                     ->label('Status')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'draft' => 'gray',
                         'pending' => 'warning',
+                        'approved' => 'info',
                         'paid' => 'success',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
-                        'draft' => 'Draft',
                         'pending' => 'Pending',
+                        'approved' => 'Disetujui',
                         'paid' => 'Dibayar',
+                        default => $state,
                     }),
             ])
             ->filters([
                 SelectFilter::make('status')
                     ->label('Status')
                     ->options([
-                        'draft' => 'Draft',
                         'pending' => 'Pending',
+                        'approved' => 'Disetujui',
                         'paid' => 'Dibayar',
                     ]),
                 SelectFilter::make('employee_id')

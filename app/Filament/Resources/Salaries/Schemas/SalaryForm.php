@@ -41,11 +41,11 @@ class SalaryForm
                             ->label('Status')
                             ->required()
                             ->options([
-                                'draft' => 'Draft',
                                 'pending' => 'Pending',
+                                'approved' => 'Disetujui',
                                 'paid' => 'Dibayar',
                             ])
-                            ->default('draft')
+                            ->default('pending')
                             ->native(false),
                     ]),
                 Section::make('Komponen Gaji')
