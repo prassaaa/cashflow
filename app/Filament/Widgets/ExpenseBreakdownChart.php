@@ -8,12 +8,20 @@ use App\Models\PurchaseOrder;
 use App\Models\Salary;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ExpenseBreakdownChart extends ChartWidget
 {
     protected ?string $heading = 'Breakdown Pengeluaran Bulan Ini';
 
     protected static ?int $sort = 5;
+
+    public static function canView(): bool
+    {
+        // Only super_admin and accounting can see expense breakdown
+        $user = Auth::user();
+        return $user?->hasAnyRole(['super_admin', 'accounting']);
+    }
 
     protected function getData(): array
     {
