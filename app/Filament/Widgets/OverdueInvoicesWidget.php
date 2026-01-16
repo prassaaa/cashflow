@@ -6,6 +6,7 @@ use App\Models\Invoice;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
+use Illuminate\Support\Facades\Auth;
 
 class OverdueInvoicesWidget extends TableWidget
 {
@@ -14,6 +15,13 @@ class OverdueInvoicesWidget extends TableWidget
     protected int|string|array $columnSpan = 'full';
 
     protected static ?string $heading = 'Invoice Jatuh Tempo';
+
+    public static function canView(): bool
+    {
+        // super_admin, marketing, and accounting can see overdue invoices
+        $user = Auth::user();
+        return $user?->hasAnyRole(['super_admin', 'marketing', 'accounting']);
+    }
 
     public function table(Table $table): Table
     {
