@@ -1,132 +1,295 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
-
 <p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
+  <img src="https://img.shields.io/badge/Laravel-12.x-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel">
+  <img src="https://img.shields.io/badge/Filament-4.x-FDAE4B?style=for-the-badge&logo=laravel&logoColor=white" alt="Filament">
+  <img src="https://img.shields.io/badge/PHP-8.2+-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP">
+  <img src="https://img.shields.io/badge/TailwindCSS-3.x-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="TailwindCSS">
 </p>
 
-## About Laravel
+<h1 align="center">💰 Cash Flow Management System</h1>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<p align="center">
+  <strong>Sistem manajemen arus kas terintegrasi untuk mengelola Job Order, Purchase Order, Invoice, Expenses, Salary, dan Production Tracking.</strong>
+</p>
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<p align="center">
+  <a href="#-fitur">Fitur</a> •
+  <a href="#-tech-stack">Tech Stack</a> •
+  <a href="#-instalasi">Instalasi</a> •
+  <a href="#-roles--permissions">Roles</a> •
+  <a href="#-screenshots">Screenshots</a> •
+  <a href="#-dokumentasi">Dokumentasi</a>
+</p>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+---
 
-## Filament Shield - Role & Permission Management
+## ✨ Fitur
 
-Aplikasi ini menggunakan [Filament Shield](https://filamentphp.com/plugins/bezhansalleh-shield) untuk manajemen hak akses, role, dan permissions.
+### 📊 Dashboard & Analytics
+- **Stats Overview** - Ringkasan JO aktif, PO pending, Invoice, dan Expenses
+- **Cash Flow Chart** - Grafik arus kas 6 bulan terakhir
+- **Expense Breakdown** - Breakdown pengeluaran per kategori
+- **Overdue Invoices** - Daftar invoice yang jatuh tempo
+- **Role-based Widgets** - Widget tampil sesuai role pengguna
 
-### 📚 Dokumentasi
+### 📋 Core Modules
 
-**[📖 Documentation Index](DOCUMENTATION_INDEX.md)** - Navigasi lengkap semua dokumentasi
+| Module | Deskripsi |
+|--------|-----------|
+| **Job Orders** | Kelola order dari customer dengan tracking status |
+| **Purchase Orders** | Manajemen pembelian material, consumable, tools |
+| **Invoices** | Penagihan dan tracking pembayaran customer |
+| **Expenses** | Catat semua pengeluaran operasional |
+| **Employees** | Database karyawan (staff, daily, contract) |
+| **Salaries** | Penggajian dengan approval workflow |
+| **Man Powers** | Alokasi tenaga kerja per Job Order |
+| **Production Progress** | Tracking progress produksi per stage |
+| **Deliveries** | Manajemen pengiriman dan surat jalan |
+| **Other Costs** | Biaya overhead dan administratif |
 
-**Quick Links**:
-- **[Quick Start Guide](QUICK_START.md)** - Panduan cepat untuk memulai
-- **[Panduan Lengkap](FILAMENT_SHIELD_GUIDE.md)** - Dokumentasi lengkap Filament Shield
-- **[Contoh Penggunaan](PERMISSION_EXAMPLES.md)** - Contoh code untuk menggunakan permissions
-- **[FAQ](FAQ.md)** - Pertanyaan umum & troubleshooting
-- **[Architecture](ARCHITECTURE.md)** - Diagram & arsitektur sistem
+### 🔐 Security & Access Control
+- **6 User Roles** - super_admin, hrd, marketing, purchasing, accounting, ppic
+- **Granular Permissions** - Kontrol akses per resource dan action
+- **Activity Logging** - Audit trail semua perubahan data
+- **Policy-based Auth** - Laravel policies untuk authorization
 
-### Fitur yang Tersedia:
+### 📤 Export & Reports
+- **Excel Export** - Export data ke format Excel (.xlsx)
+- **Bulk Actions** - Bulk export untuk data terpilih
+- **Filtered Export** - Export berdasarkan filter yang aktif
 
-- **User Management**: CRUD lengkap untuk user dengan assignment role
-- **Role Management**: Kelola role dan permissions melalui Filament panel
-- **Permission Management**: Kontrol akses granular untuk Resources, Pages, dan Widgets
-- **Policy-based Authorization**: Otomatis generate policies untuk setiap resource
-- **Activity Log**: Track semua perubahan pada user (create, update, delete)
+---
 
-### Login Super Admin:
+## 🛠 Tech Stack
 
-- Email: `superadmin@example.com`
-- Password: `password`
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Laravel | 12.x | PHP Framework |
+| Filament | 4.x | Admin Panel |
+| PHP | 8.2+ | Runtime |
+| MySQL/PostgreSQL | 8.x | Database |
+| Livewire | 3.x | Reactive Components |
+| TailwindCSS | 3.x | Styling |
+| Spatie Permission | 6.x | Role & Permission |
+| Filament Shield | 3.x | Permission UI |
+| pxlrbt Excel | 3.x | Excel Export |
 
-### Akses Panel:
+---
 
-Buka browser dan akses: `http://localhost/auth/login`
+## 🚀 Instalasi
 
-### Roles yang Tersedia:
+### Requirements
+- PHP >= 8.2
+- Composer
+- Node.js >= 18
+- MySQL 8.x / PostgreSQL
 
-| Role | Deskripsi | Permissions |
-|------|-----------|-------------|
-| `super_admin` | Super Administrator | Semua akses (bypass all checks) |
-| `admin` | Administrator | Kelola users (CRUD lengkap) |
-| `staff` | Staff | Hanya lihat users (read-only) |
-
-### Activity Log:
-
-Setiap perubahan pada user akan tercatat di activity log. Akses melalui:
-1. Menu Users → Klik icon "Activity Log" pada user yang ingin dilihat
-2. Atau akses langsung: `/auth/users/{id}/activities`
-
-Activity log mencatat:
-- Event (created, updated, deleted)
-- Perubahan data (old value vs new value)
-- Timestamp
-- User yang melakukan perubahan (causer)
-
-### Quick Commands:
+### Quick Start
 
 ```bash
-# Generate permissions untuk resource baru
-php artisan shield:generate --resource=NamaResource --panel=auth
+# Clone repository
+git clone https://github.com/prassaaa/cashflow.git
+cd cashflow
 
-# Generate permissions untuk semua resources
-php artisan shield:generate --all --panel=auth
+# Install dependencies
+composer install
+npm install
 
-# Buat super admin baru
-php artisan shield:super-admin --panel=auth
+# Setup environment
+cp .env.example .env
+php artisan key:generate
 
-# Seed roles & permissions
-php artisan db:seed --class=RolePermissionSeeder
+# Configure database di .env
+# DB_DATABASE=cashflow
+# DB_USERNAME=root
+# DB_PASSWORD=
 
-# Build assets (required setelah setup activity log)
+# Run migrations & seeders
+php artisan migrate
+php artisan db:seed
+
+# Build assets
 npm run build
+
+# Start server
+php artisan serve
 ```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### Demo Data (Optional)
 
-## Learning Laravel
+```bash
+# Seed demo data untuk testing
+php artisan db:seed --class=DemoDataSeeder
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 👥 Roles & Permissions
 
-## Laravel Sponsors
+### Test Accounts
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+| Role | Email | Password |
+|------|-------|----------|
+| Super Admin | admin@cashflow.test | password |
+| HRD | hrd@cashflow.test | password |
+| Marketing | marketing@cashflow.test | password |
+| Purchasing | purchasing@cashflow.test | password |
+| Accounting | accounting@cashflow.test | password |
+| PPIC | ppic@cashflow.test | password |
 
-### Premium Partners
+### Role Responsibilities
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+```
+┌──────────────────────────────────────────────────────────────────────────┐
+│                         BUSINESS FLOW                                     │
+├──────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  MARKETING ──▶ PURCHASING ──▶ PPIC ──▶ ACCOUNTING ──▶ HRD              │
+│      │             │           │            │           │                │
+│      ▼             ▼           ▼            ▼           ▼                │
+│  Job Order    Purchase     Production   Expenses    Employee             │
+│  Invoice      Order        Progress     Invoice     Salary               │
+│  Delivery                  Man Power    Other Cost                       │
+│                            Delivery                                      │
+│                                                                          │
+└──────────────────────────────────────────────────────────────────────────┘
+```
 
-## Contributing
+### Module Access Matrix
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Module | super_admin | accounting | marketing | ppic | hrd | purchasing |
+|--------|:-----------:|:----------:|:---------:|:----:|:---:|:----------:|
+| Job Orders | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ |
+| Purchase Orders | ✅ | ✅ | ❌ | ❌ | ❌ | ✅ |
+| Expenses | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Invoices | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
+| Employees | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
+| Salaries | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Man Powers | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ |
+| Production Progress | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
+| Deliveries | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ |
+| Other Costs | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
 
-## Code of Conduct
+---
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 📸 Screenshots
 
-## Security Vulnerabilities
+### Dashboard
+```
+┌─────────────────────────────────────────────────────────────┐
+│  📊 Stats Overview                                          │
+│  ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐    │
+│  │JO: 5 │ │PO: 8 │ │Inv:12│ │Due: 3│ │Exp:5M│ │Sal:8M│    │
+│  └──────┘ └──────┘ └──────┘ └──────┘ └──────┘ └──────┘    │
+│                                                             │
+│  📈 Cash Flow Chart (6 Months)    🍩 Expense Breakdown     │
+│  ┌─────────────────────────┐      ┌─────────────────────┐  │
+│  │ Income ████████████     │      │    PO: 40%          │  │
+│  │ Expense ████████        │      │    Expense: 30%     │  │
+│  │                         │      │    Salary: 25%      │  │
+│  └─────────────────────────┘      └─────────────────────┘  │
+│                                                             │
+│  📋 Latest Job Orders           ⚠️ Overdue Invoices        │
+│  ┌─────────────────────────────────────────────────────┐   │
+│  │ JO-001 │ PT ABC │ Project X │ Rp 50.000.000 │ ●     │   │
+│  │ JO-002 │ PT XYZ │ Project Y │ Rp 75.000.000 │ ●     │   │
+│  └─────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────┘
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+## 📖 Dokumentasi
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Dokumen | Deskripsi |
+|---------|-----------|
+| [Testing Guide](docs/TESTING_GUIDE.md) | Panduan testing lengkap per role |
+| [API Reference](#) | Dokumentasi API (coming soon) |
+
+---
+
+## 🔧 Artisan Commands
+
+```bash
+# Clear all caches
+php artisan optimize:clear
+
+# Generate permissions for new resource
+php artisan shield:generate --resource=NewResource --panel=auth
+
+# Generate all permissions
+php artisan shield:generate --all --panel=auth
+
+# Create super admin
+php artisan shield:super-admin --panel=auth
+
+# Run tests
+php artisan test
+
+# Check code style
+./vendor/bin/pint --test
+```
+
+---
+
+## 📁 Project Structure
+
+```
+cashflow/
+├── app/
+│   ├── Filament/
+│   │   ├── Resources/          # Filament CRUD Resources
+│   │   │   ├── JobOrders/
+│   │   │   ├── PurchaseOrders/
+│   │   │   ├── Invoices/
+│   │   │   ├── Expenses/
+│   │   │   ├── Employees/
+│   │   │   ├── Salaries/
+│   │   │   └── ...
+│   │   └── Widgets/            # Dashboard Widgets
+│   │       ├── StatsOverviewWidget.php
+│   │       ├── CashFlowChartWidget.php
+│   │       ├── ExpenseBreakdownChart.php
+│   │       └── ...
+│   ├── Models/                 # Eloquent Models
+│   ├── Policies/               # Authorization Policies
+│   └── Providers/
+├── database/
+│   ├── migrations/
+│   └── seeders/
+│       ├── DatabaseSeeder.php
+│       └── DemoDataSeeder.php
+├── docs/
+│   └── TESTING_GUIDE.md
+└── resources/
+    └── views/
+```
+
+---
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Buat feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push ke branch (`git push origin feature/AmazingFeature`)
+5. Open Pull Request
+
+---
+
+## 📝 License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+---
+
+## 📞 Support
+
+Jika ada pertanyaan atau issue, silakan:
+- Buka [GitHub Issue](https://github.com/prassaaa/cashflow/issues)
+- Email: support@example.com
+
+---
+
+<p align="center">
+  Made with ❤️ using Laravel & Filament
+</p>
