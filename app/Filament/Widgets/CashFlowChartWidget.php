@@ -9,6 +9,7 @@ use App\Models\PurchaseOrder;
 use App\Models\Salary;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class CashFlowChartWidget extends ChartWidget
 {
@@ -19,6 +20,13 @@ class CashFlowChartWidget extends ChartWidget
     protected int|string|array $columnSpan = 'full';
 
     protected ?string $maxHeight = '300px';
+
+    public static function canView(): bool
+    {
+        // Only super_admin and accounting can see cash flow chart
+        $user = Auth::user();
+        return $user?->hasAnyRole(['super_admin', 'accounting']);
+    }
 
     protected function getData(): array
     {
