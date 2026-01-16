@@ -27,7 +27,7 @@ class SalaryStatsWidget extends BaseStatsOverviewWidget
         $totalEmployees = Employee::count();
         $activeEmployees = Employee::where('status', 'active')->count();
 
-        $salaryThisMonth = Salary::where('period', $currentMonth)->sum('total_salary');
+        $salaryThisMonth = Salary::where('period', $currentMonth)->sum('total');
         $pendingSalaries = Salary::where('period', $currentMonth)
             ->where('status', 'pending')
             ->count();
