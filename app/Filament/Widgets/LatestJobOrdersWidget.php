@@ -6,6 +6,7 @@ use App\Models\JobOrder;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
+use Illuminate\Support\Facades\Auth;
 
 class LatestJobOrdersWidget extends TableWidget
 {
@@ -14,6 +15,13 @@ class LatestJobOrdersWidget extends TableWidget
     protected int|string|array $columnSpan = 'full';
 
     protected static ?string $heading = 'Job Order Terbaru';
+
+    public static function canView(): bool
+    {
+        // super_admin, marketing, and ppic can see job orders
+        $user = Auth::user();
+        return $user?->hasAnyRole(['super_admin', 'marketing', 'ppic']);
+    }
 
     public function table(Table $table): Table
     {
