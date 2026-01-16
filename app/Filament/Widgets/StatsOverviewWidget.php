@@ -9,10 +9,18 @@ use App\Models\PurchaseOrder;
 use App\Models\Salary;
 use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
+use Illuminate\Support\Facades\Auth;
 
 class StatsOverviewWidget extends BaseStatsOverviewWidget
 {
     protected static ?int $sort = 1;
+
+    public static function canView(): bool
+    {
+        // Only super_admin and accounting can see stats overview
+        $user = Auth::user();
+        return $user?->hasAnyRole(['super_admin', 'accounting']);
+    }
 
     protected function getStats(): array
     {
