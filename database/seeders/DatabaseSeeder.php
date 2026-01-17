@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             $user->assignRole($role);
         }
 
-        // Seed demo data
-        $this->call(DemoDataSeeder::class);
+        // // Seed demo data
+        // $this->call(DemoDataSeeder::class);
     }
 }
