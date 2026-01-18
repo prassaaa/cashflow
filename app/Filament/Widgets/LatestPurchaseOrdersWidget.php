@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LatestPurchaseOrdersWidget extends ChartWidget
 {
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 9;
 
     protected int|string|array $columnSpan = 'full';
 
