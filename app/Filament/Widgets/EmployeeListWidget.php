@@ -3,18 +3,18 @@
 namespace App\Filament\Widgets;
 
 use App\Models\Employee;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Table;
-use Filament\Widgets\TableWidget;
+use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\Auth;
 
-class EmployeeListWidget extends TableWidget
+class EmployeeListWidget extends ChartWidget
 {
-    protected static ?int $sort = 7;
+    protected static ?int $sort = 5;
 
-    protected int|string|array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 1;
 
-    protected static ?string $heading = 'Daftar Karyawan Aktif';
+    protected ?string $heading = 'Distribusi Karyawan Aktif';
+
+    protected ?string $maxHeight = '300px';
 
     public static function canView(): bool
     {
@@ -23,57 +23,59 @@ class EmployeeListWidget extends TableWidget
         return $user?->hasAnyRole(['super_admin', 'hrd']);
     }
 
-    public function table(Table $table): Table
+    protected function getData(): array
     {
-        return $table
-            ->query(
-                Employee::query()
-                    ->where('status', 'active')
-                    ->orderBy('name')
-                    ->limit(10)
-            )
-            ->columns([
-                TextColumn::make('nik')
-                    ->label('NIK')
-                    ->searchable()
-                    ->weight('bold'),
+        // Count employees by type
+        $staff = Employee::where('status', 'active')
+            ->where('type', 'staff')
+            ->count();
 
-                TextColumn::make('name')
-                    ->label('Nama')
-                    ->searchable()
-                    ->limit(30),
+        $daily = Employee::where('status', 'active')
+            ->where('type', 'daily')
+            ->count();
 
-                TextColumn::make('position')
-                    ->label('Jabatan')
-                    ->searchable(),
+        $contract = Employee::where('status', 'active')
+            ->where('type', 'contract')
+            ->count();
 
-                TextColumn::make('type')
-                    ->label('Tipe')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'staff' => 'success',
-                        'daily' => 'warning',
-                        'contract' => 'info',
-                        default => 'gray',
-                    }),
+        return [
+            'datasets' => [
+                [
+                    'data' => [$staff, $daily, $contract],
+                    'backgroundColor' => [
+                        'rgb(34, 197, 94)',    // green - Staff
+                        'rgb(251, 146, 60)',   // orange - Daily
+                        'rgb(59, 130, 246)',   // blue - Contract
+                    ],
+                    'borderColor' => [
+                        'rgb(34, 197, 94)',
+                        'rgb(251, 146, 60)',
+                        'rgb(59, 130, 246)',
+                    ],
+                    'borderWidth' => 2,
+                ],
+            ],
+            'labels' => ['Staff (' . $staff . ')', 'Daily (' . $daily . ')', 'Contract (' . $contract . ')'],
+        ];
+    }
 
-                TextColumn::make('daily_rate')
-                    ->label('Gaji Harian')
-                    ->money('IDR')
-                    ->alignEnd(),
+    protected function getType(): string
+    {
+        return 'doughnut';
+    }
 
-                TextColumn::make('join_date')
-                    ->label('Tanggal Masuk')
-                    ->date('d M Y'),
-
-                TextColumn::make('status')
-                    ->badge()
-                    ->color(fn(string $state): string => match ($state) {
-                        'active' => 'success',
-                        'inactive' => 'danger',
-                        default => 'gray',
-                    }),
-            ])
-            ->paginated(false);
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                    'position' => 'bottom',
+                ],
+                'tooltip' => [
+                    'enabled' => true,
+                ],
+            ],
+        ];
     }
 }
