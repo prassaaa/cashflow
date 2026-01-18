@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class OverdueInvoicesWidget extends TableWidget
 {
-    protected static ?int $sort = 8;
+    protected static ?int $sort = 12;
 
     protected int|string|array $columnSpan = 'full';
 
