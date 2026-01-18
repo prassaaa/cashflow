@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class SalaryStatsWidget extends ChartWidget
 {
-    protected static ?int $sort = 3;
+    protected static ?int $sort = 5;
 
     protected ?string $heading = 'Statistik Gaji (6 Bulan Terakhir)';
 
