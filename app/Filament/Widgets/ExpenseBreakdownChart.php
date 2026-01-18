@@ -12,11 +12,13 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpenseBreakdownChart extends ChartWidget
 {
-    protected ?string $heading = 'Breakdown Pengeluaran Bulan Ini';
-
-    protected static ?int $sort = 5;
+    protected static ?int $sort = 6;
 
     protected int|string|array $columnSpan = 1;
+
+    protected ?string $heading = 'Breakdown Pengeluaran Bulan Ini';
+
+    protected ?string $maxHeight = '300px';
 
     public static function canView(): bool
     {
