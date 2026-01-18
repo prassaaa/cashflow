@@ -11,11 +11,11 @@ use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class CashFlowChartWidget extends ChartWidget
+class CashFlowChartWeeklyWidget extends ChartWidget
 {
-    protected ?string $heading = 'Cash Flow 6 Bulan Terakhir';
+    protected ?string $heading = 'Cash Flow Bulan Ini (Per Minggu)';
 
-    protected static ?int $sort = 7;
+    protected static ?int $sort = 8;
 
     protected int|string|array $columnSpan = 'full';
 
@@ -23,48 +23,79 @@ class CashFlowChartWidget extends ChartWidget
 
     public static function canView(): bool
     {
-        // Only super_admin and accounting can see cash flow chart
         $user = Auth::user();
         return $user?->hasAnyRole(['super_admin', 'accounting']);
     }
 
+    protected function getWeekRanges(): array
+    {
+        $now = Carbon::now();
+        $startOfMonth = $now->copy()->startOfMonth();
+        $endOfMonth = $now->copy()->endOfMonth();
+
+        $weeks = [];
+        $weekStart = $startOfMonth->copy();
+
+        for ($i = 1; $i <= 4; $i++) {
+            $weekEnd = $weekStart->copy()->addDays(6);
+
+            if ($weekEnd->gt($endOfMonth)) {
+                $weekEnd = $endOfMonth->copy();
+            }
+
+            if ($i === 4) {
+                $weekEnd = $endOfMonth->copy();
+            }
+
+            $weeks[] = [
+                'label' => "Minggu $i",
+                'start' => $weekStart->copy(),
+                'end' => $weekEnd->copy(),
+            ];
+
+            $weekStart = $weekEnd->copy()->addDay();
+
+            if ($weekStart->gt($endOfMonth)) {
+                break;
+            }
+        }
+
+        return $weeks;
+    }
+
     protected function getData(): array
     {
-        $months = collect();
+        $weeks = $this->getWeekRanges();
+        $labels = collect();
         $incomeData = collect();
         $expenseData = collect();
 
-        // Get last 6 months
-        for ($i = 5; $i >= 0; $i--) {
-            $date = Carbon::now()->subMonths($i);
-            $months->push($date->format('M Y'));
+        foreach ($weeks as $week) {
+            $labels->push($week['label']);
+            $start = $week['start'];
+            $end = $week['end'];
 
             // Income = Invoice paid
             $income = Invoice::where('status', 'paid')
-                ->whereMonth('paid_date', $date->month)
-                ->whereYear('paid_date', $date->year)
+                ->whereBetween('paid_date', [$start, $end])
                 ->sum('amount');
             $incomeData->push($income);
 
             // Expenses = PO + Expense + Salary + OtherCost
             $po = PurchaseOrder::whereIn('status', ['approved', 'received'])
-                ->whereMonth('po_date', $date->month)
-                ->whereYear('po_date', $date->year)
+                ->whereBetween('po_date', [$start, $end])
                 ->sum('value');
 
             $expense = Expense::whereIn('status', ['approved', 'paid'])
-                ->whereMonth('expense_date', $date->month)
-                ->whereYear('expense_date', $date->year)
+                ->whereBetween('expense_date', [$start, $end])
                 ->sum('amount');
 
             $salary = Salary::where('status', 'paid')
-                ->whereMonth('payment_date', $date->month)
-                ->whereYear('payment_date', $date->year)
+                ->whereBetween('payment_date', [$start, $end])
                 ->sum('total');
 
             $otherCost = OtherCost::whereIn('status', ['approved', 'paid'])
-                ->whereMonth('cost_date', $date->month)
-                ->whereYear('cost_date', $date->year)
+                ->whereBetween('cost_date', [$start, $end])
                 ->sum('amount');
 
             $expenseData->push($po + $expense + $salary + $otherCost);
@@ -87,7 +118,7 @@ class CashFlowChartWidget extends ChartWidget
                     'tension' => 0.3,
                 ],
             ],
-            'labels' => $months->toArray(),
+            'labels' => $labels->toArray(),
         ];
     }
 
