@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class ExpenseBreakdownChart extends ChartWidget
 {
-    protected static ?int $sort = 6;
+    protected static ?int $sort = 10;
 
     protected int|string|array $columnSpan = 1;
 
