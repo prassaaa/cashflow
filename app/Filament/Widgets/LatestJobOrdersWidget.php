@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class LatestJobOrdersWidget extends TableWidget
 {
-    protected static ?int $sort = 8;
+    protected static ?int $sort = 7;
 
     protected int|string|array $columnSpan = 'full';
 
