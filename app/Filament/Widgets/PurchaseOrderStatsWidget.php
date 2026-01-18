@@ -3,14 +3,19 @@
 namespace App\Filament\Widgets;
 
 use App\Models\PurchaseOrder;
-use Filament\Widgets\StatsOverviewWidget as BaseStatsOverviewWidget;
-use Filament\Widgets\StatsOverviewWidget\Stat;
+use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
-class PurchaseOrderStatsWidget extends BaseStatsOverviewWidget
+class PurchaseOrderStatsWidget extends ChartWidget
 {
     protected static ?int $sort = 1;
+
+    protected ?string $heading = 'Status Purchase Order (6 Bulan Terakhir)';
+
+    protected int|string|array $columnSpan = 'full';
+
+    protected ?string $maxHeight = '350px';
 
     public static function canView(): bool
     {
@@ -19,55 +24,116 @@ class PurchaseOrderStatsWidget extends BaseStatsOverviewWidget
         return $user?->hasAnyRole(['super_admin', 'purchasing']);
     }
 
-    protected function getStats(): array
+    protected function getData(): array
     {
-        $currentMonth = Carbon::now();
+        $months = collect();
+        $pendingData = collect();
+        $approvedData = collect();
+        $orderedData = collect();
+        $receivedData = collect();
 
-        $totalPOThisMonth = PurchaseOrder::whereMonth('po_date', $currentMonth->month)
-            ->whereYear('po_date', $currentMonth->year)
-            ->count();
+        // Get last 6 months data
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $months->push($date->format('M Y'));
 
-        $totalValueThisMonth = PurchaseOrder::whereMonth('po_date', $currentMonth->month)
-            ->whereYear('po_date', $currentMonth->year)
-            ->sum('value');
+            // Count PO by status per month
+            $pending = PurchaseOrder::where('status', 'pending')
+                ->whereMonth('po_date', $date->month)
+                ->whereYear('po_date', $date->year)
+                ->sum('value');
+            $pendingData->push($pending);
 
-        $pendingPO = PurchaseOrder::where('status', 'pending')->count();
-        $approvedPO = PurchaseOrder::where('status', 'approved')->count();
-        $orderedPO = PurchaseOrder::where('status', 'ordered')->count();
-        $receivedPO = PurchaseOrder::where('status', 'received')->count();
+            $approved = PurchaseOrder::where('status', 'approved')
+                ->whereMonth('po_date', $date->month)
+                ->whereYear('po_date', $date->year)
+                ->sum('value');
+            $approvedData->push($approved);
 
-        $pendingValue = PurchaseOrder::where('status', 'pending')->sum('value');
+            $ordered = PurchaseOrder::where('status', 'ordered')
+                ->whereMonth('po_date', $date->month)
+                ->whereYear('po_date', $date->year)
+                ->sum('value');
+            $orderedData->push($ordered);
+
+            $received = PurchaseOrder::where('status', 'received')
+                ->whereMonth('po_date', $date->month)
+                ->whereYear('po_date', $date->year)
+                ->sum('value');
+            $receivedData->push($received);
+        }
 
         return [
-            Stat::make('PO Bulan Ini', $totalPOThisMonth)
-                ->description($currentMonth->translatedFormat('F Y'))
-                ->color('primary')
-                ->icon('heroicon-o-clipboard-document-list'),
-
-            Stat::make('Nilai PO Bulan Ini', 'Rp ' . number_format($totalValueThisMonth, 0, ',', '.'))
-                ->description('Total nilai')
-                ->color('warning')
-                ->icon('heroicon-o-currency-dollar'),
-
-            Stat::make('PO Pending', $pendingPO)
-                ->description('Rp ' . number_format($pendingValue, 0, ',', '.'))
-                ->color('danger')
-                ->icon('heroicon-o-clock'),
-
-            Stat::make('PO Approved', $approvedPO)
-                ->description('Menunggu order')
-                ->color('info')
-                ->icon('heroicon-o-check-circle'),
-
-            Stat::make('PO Ordered', $orderedPO)
-                ->description('Sudah diorder')
-                ->color('primary')
-                ->icon('heroicon-o-truck'),
-
-            Stat::make('PO Received', $receivedPO)
-                ->description('Barang diterima')
-                ->color('success')
-                ->icon('heroicon-o-check-badge'),
+            'datasets' => [
+                [
+                    'label' => 'Pending',
+                    'data' => $pendingData->toArray(),
+                    'backgroundColor' => 'rgba(239, 68, 68, 0.8)',
+                    'borderColor' => 'rgb(239, 68, 68)',
+                    'borderWidth' => 1,
+                ],
+                [
+                    'label' => 'Approved',
+                    'data' => $approvedData->toArray(),
+                    'backgroundColor' => 'rgba(59, 130, 246, 0.8)',
+                    'borderColor' => 'rgb(59, 130, 246)',
+                    'borderWidth' => 1,
+                ],
+                [
+                    'label' => 'Ordered',
+                    'data' => $orderedData->toArray(),
+                    'backgroundColor' => 'rgba(251, 146, 60, 0.8)',
+                    'borderColor' => 'rgb(251, 146, 60)',
+                    'borderWidth' => 1,
+                ],
+                [
+                    'label' => 'Received',
+                    'data' => $receivedData->toArray(),
+                    'backgroundColor' => 'rgba(34, 197, 94, 0.8)',
+                    'borderColor' => 'rgb(34, 197, 94)',
+                    'borderWidth' => 1,
+                ],
+            ],
+            'labels' => $months->toArray(),
         ];
+    }
+
+    protected function getType(): string
+    {
+        return 'bar';
+    }
+
+    protected function getOptions(): array
+    {
+        return [
+            'plugins' => [
+                'legend' => [
+                    'display' => true,
+                    'position' => 'bottom',
+                ],
+                'tooltip' => [
+                    'enabled' => true,
+                    'mode' => 'index',
+                    'intersect' => false,
+                ],
+            ],
+            'scales' => [
+                'x' => [
+                    'stacked' => true,
+                ],
+                'y' => [
+                    'stacked' => true,
+                    'beginAtZero' => true,
+                ],
+            ],
+        ];
+    }
+
+    protected function getFormattedState(string | int | float | null $state): string
+    {
+        if ($state === null) {
+            return 'Rp 0';
+        }
+        return 'Rp ' . number_format($state, 0, ',', '.');
     }
 }
