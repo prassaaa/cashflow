@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 
 class PurchaseOrderStatsWidget extends ChartWidget
 {
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 2;
 
     protected ?string $heading = 'Status Purchase Order (6 Bulan Terakhir)';
 

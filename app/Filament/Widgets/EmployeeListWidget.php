@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 
 class EmployeeListWidget extends TableWidget
 {
-    protected static ?int $sort = 2;
+    protected static ?int $sort = 7;
 
     protected int|string|array $columnSpan = 'full';
 
