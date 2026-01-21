@@ -97,7 +97,7 @@ class StatsOverviewWeeklyWidget extends ChartWidget
             $poPendingData->push($poPending);
 
             // Invoice belum dibayar per minggu
-            $unpaidInvoice = Invoice::whereIn('status', ['draft', 'sent', 'partial'])
+            $unpaidInvoice = Invoice::whereIn('status', ['draft', 'sent'])
                 ->whereBetween('invoice_date', [$start, $end])
                 ->sum('amount');
             $unpaidInvoiceData->push($unpaidInvoice);

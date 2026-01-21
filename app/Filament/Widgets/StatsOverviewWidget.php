@@ -58,7 +58,7 @@ class StatsOverviewWidget extends ChartWidget
             $poPendingData->push($poPending);
 
             // Invoice belum dibayar per bulan
-            $unpaidInvoice = Invoice::whereIn('status', ['draft', 'sent', 'partial'])
+            $unpaidInvoice = Invoice::whereIn('status', ['draft', 'sent'])
                 ->whereMonth('invoice_date', $date->month)
                 ->whereYear('invoice_date', $date->year)
                 ->sum('amount');
