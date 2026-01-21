@@ -12,6 +12,7 @@ use App\Models\OtherCost;
 use App\Models\ProductionProgress;
 use App\Models\PurchaseOrder;
 use App\Models\Salary;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DemoDataSeeder extends Seeder
@@ -21,11 +22,14 @@ class DemoDataSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create PPIC users first
+        $ppicUsers = $this->createPpicUsers();
+
         // Create Employees
         $employees = $this->createEmployees();
 
         // Create Job Orders
-        $jobOrders = $this->createJobOrders();
+        $jobOrders = $this->createJobOrders($ppicUsers);
 
         // Create related data for each Job Order
         foreach ($jobOrders as $index => $jobOrder) {
@@ -38,6 +42,36 @@ class DemoDataSeeder extends Seeder
             $this->createManPowers($jobOrder, $employees, $index);
             $this->createSalaries($jobOrder, $employees, $index);
         }
+    }
+
+    private function createPpicUsers(): array
+    {
+        $ppicUsersData = [
+            [
+                'name' => 'Rina Setiawan',
+                'email' => 'rina.ppic@cashflow.test',
+                'password' => bcrypt('password'),
+            ],
+            [
+                'name' => 'Agus Nugroho',
+                'email' => 'agus.ppic@cashflow.test',
+                'password' => bcrypt('password'),
+            ],
+            [
+                'name' => 'Tina Wijaya',
+                'email' => 'tina.ppic@cashflow.test',
+                'password' => bcrypt('password'),
+            ],
+        ];
+
+        $ppicUsers = [];
+        foreach ($ppicUsersData as $data) {
+            $user = User::create($data);
+            $user->assignRole('ppic');
+            $ppicUsers[] = $user;
+        }
+
+        return $ppicUsers;
     }
 
     private function createEmployees(): array
@@ -153,8 +187,14 @@ class DemoDataSeeder extends Seeder
         return $employees;
     }
 
-    private function createJobOrders(): array
+    private function createJobOrders(array $ppicUsers): array
     {
+        $containerNames = ['TEMU5046897', 'TCKU1234567', 'MSCU8901234', 'CMAU5678901', 'HLCU2345678'];
+        $units = ['PC', 'PP', 'SET', 'PCS'];
+        $pipaStatuses = ['pending', 'paid'];
+        $cartonTypes = ['SWL', 'DWL', 'TWL', 'RSA', 'INHOUSE'];
+        $paymentStatuses = ['unpaid', 'partial', 'paid'];
+
         $jobOrdersData = [
             [
                 'jo_number' => 'JO-2025-0001',
@@ -165,6 +205,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2025-10-01',
                 'due_date' => '2025-11-15',
                 'status' => 'completed',
+                'user_id' => $ppicUsers[0]->id,
+                'container_name' => $containerNames[0],
+                'quantity' => 1000,
+                'unit' => 'PCS',
+                'pipa_status' => 'paid',
+                'carton_type' => 'DWL',
+                'payment_status' => 'paid',
             ],
             [
                 'jo_number' => 'JO-2025-0002',
@@ -175,6 +222,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2025-10-15',
                 'due_date' => '2025-11-01',
                 'status' => 'completed',
+                'user_id' => $ppicUsers[1]->id,
+                'container_name' => $containerNames[1],
+                'quantity' => 5000,
+                'unit' => 'PC',
+                'pipa_status' => 'paid',
+                'carton_type' => 'SWL',
+                'payment_status' => 'paid',
             ],
             [
                 'jo_number' => 'JO-2025-0003',
@@ -185,6 +239,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2025-11-01',
                 'due_date' => '2025-12-15',
                 'status' => 'in_progress',
+                'user_id' => $ppicUsers[2]->id,
+                'container_name' => $containerNames[2],
+                'quantity' => 500,
+                'unit' => 'SET',
+                'pipa_status' => 'paid',
+                'carton_type' => 'TWL',
+                'payment_status' => 'partial',
             ],
             [
                 'jo_number' => 'JO-2025-0004',
@@ -195,6 +256,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2025-11-10',
                 'due_date' => '2025-12-01',
                 'status' => 'in_progress',
+                'user_id' => $ppicUsers[0]->id,
+                'container_name' => $containerNames[3],
+                'quantity' => 10000,
+                'unit' => 'PCS',
+                'pipa_status' => 'pending',
+                'carton_type' => 'RSA',
+                'payment_status' => 'partial',
             ],
             [
                 'jo_number' => 'JO-2025-0005',
@@ -205,6 +273,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2025-11-20',
                 'due_date' => '2026-01-05',
                 'status' => 'in_progress',
+                'user_id' => $ppicUsers[1]->id,
+                'container_name' => $containerNames[4],
+                'quantity' => 3000,
+                'unit' => 'PCS',
+                'pipa_status' => 'pending',
+                'carton_type' => 'INHOUSE',
+                'payment_status' => 'unpaid',
             ],
             [
                 'jo_number' => 'JO-2026-0001',
@@ -215,6 +290,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2026-01-02',
                 'due_date' => '2026-02-15',
                 'status' => 'pending',
+                'user_id' => $ppicUsers[2]->id,
+                'container_name' => $containerNames[0],
+                'quantity' => 2000,
+                'unit' => 'PCS',
+                'pipa_status' => 'pending',
+                'carton_type' => 'TWL',
+                'payment_status' => 'unpaid',
             ],
             [
                 'jo_number' => 'JO-2026-0002',
@@ -225,6 +307,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2026-01-05',
                 'due_date' => '2026-02-10',
                 'status' => 'pending',
+                'user_id' => $ppicUsers[0]->id,
+                'container_name' => $containerNames[1],
+                'quantity' => 5000,
+                'unit' => 'SET',
+                'pipa_status' => 'pending',
+                'carton_type' => 'SWL',
+                'payment_status' => 'unpaid',
             ],
             [
                 'jo_number' => 'JO-2026-0003',
@@ -235,6 +324,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2026-01-08',
                 'due_date' => '2026-01-25',
                 'status' => 'pending',
+                'user_id' => $ppicUsers[1]->id,
+                'container_name' => $containerNames[2],
+                'quantity' => 2000,
+                'unit' => 'PP',
+                'pipa_status' => 'pending',
+                'carton_type' => 'DWL',
+                'payment_status' => 'unpaid',
             ],
             [
                 'jo_number' => 'JO-2026-0004',
@@ -245,6 +341,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2026-01-10',
                 'due_date' => '2026-02-28',
                 'status' => 'pending',
+                'user_id' => $ppicUsers[2]->id,
+                'container_name' => $containerNames[3],
+                'quantity' => 1000,
+                'unit' => 'SET',
+                'pipa_status' => 'pending',
+                'carton_type' => 'RSA',
+                'payment_status' => 'unpaid',
             ],
             [
                 'jo_number' => 'JO-2026-0005',
@@ -255,6 +358,13 @@ class DemoDataSeeder extends Seeder
                 'order_date' => '2026-01-12',
                 'due_date' => '2026-02-20',
                 'status' => 'pending',
+                'user_id' => $ppicUsers[0]->id,
+                'container_name' => $containerNames[4],
+                'quantity' => 3000,
+                'unit' => 'PCS',
+                'pipa_status' => 'pending',
+                'carton_type' => 'INHOUSE',
+                'payment_status' => 'unpaid',
             ],
         ];
 
@@ -347,29 +457,54 @@ class DemoDataSeeder extends Seeder
 
     private function createInvoices(JobOrder $jobOrder, int $index): void
     {
+        $shippers = ['PT GLOBALINDO', 'CV ABHINAYA', 'PT NUSANTARA SHIPPING', 'CV MAJU JAYA CARGO'];
+        $poNumbers = ['PO-2025-001', 'PO-2025-002', 'PO-2025-003', 'PO-2025-004', 'PO-2026-001'];
+
         // DP Invoice
+        $dpAmount = $jobOrder->value * 0.3; // 30% DP
+        $dpDeposit = $dpAmount * 0.5; // 50% dari DP sebagai deposit
+        $dpPaid = $index < 4 ? $dpAmount - $dpDeposit : 0;
+
         Invoice::create([
             'job_order_id' => $jobOrder->id,
             'invoice_number' => 'INV-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + 1, 4, '0', STR_PAD_LEFT),
-            'amount' => $jobOrder->value * 0.3, // 30% DP
+            'amount' => $dpAmount,
             'invoice_date' => $jobOrder->order_date,
             'due_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +14 days')),
             'paid_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date . ' +7 days')) : null,
             'status' => $index < 4 ? 'paid' : ($index < 6 ? 'sent' : 'draft'),
             'notes' => 'Invoice DP 30%',
+            'shipped_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date . ' +3 days')) : null,
+            'shipper' => $shippers[array_rand($shippers)],
+            'buyer' => $jobOrder->customer_name,
+            'po_number' => $poNumbers[array_rand($poNumbers)],
+            'container' => $jobOrder->container_name,
+            'deposit_discount' => $dpDeposit,
+            'paid_amount' => $dpPaid,
         ]);
 
         // Pelunasan Invoice (only for completed or in_progress)
         if ($index < 5) {
+            $finalAmount = $jobOrder->value * 0.7; // 70% Pelunasan
+            $finalDeposit = $finalAmount * 0.3; // 30% dari final sebagai deposit
+            $finalPaid = $index < 2 ? $finalAmount - $finalDeposit : ($index < 4 ? $finalAmount * 0.5 : 0);
+
             Invoice::create([
                 'job_order_id' => $jobOrder->id,
                 'invoice_number' => 'INV-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + 2, 4, '0', STR_PAD_LEFT),
-                'amount' => $jobOrder->value * 0.7, // 70% Pelunasan
+                'amount' => $finalAmount,
                 'invoice_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' -7 days')),
                 'due_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' +7 days')),
                 'paid_date' => $index < 2 ? date('Y-m-d', strtotime($jobOrder->due_date . ' +3 days')) : null,
                 'status' => $index < 2 ? 'paid' : 'sent',
                 'notes' => 'Invoice Pelunasan 70%',
+                'shipped_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' -2 days')),
+                'shipper' => $shippers[array_rand($shippers)],
+                'buyer' => $jobOrder->customer_name,
+                'po_number' => $poNumbers[array_rand($poNumbers)],
+                'container' => $jobOrder->container_name,
+                'deposit_discount' => $finalDeposit,
+                'paid_amount' => $finalPaid,
             ]);
         }
     }
