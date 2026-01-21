@@ -41,9 +41,9 @@ class InvoiceForm
                             ->options([
                                 'draft' => 'Draft',
                                 'sent' => 'Terkirim',
-                                'partial' => 'Sebagian',
                                 'paid' => 'Lunas',
                                 'overdue' => 'Jatuh Tempo',
+                                'cancelled' => 'Dibatalkan',
                             ])
                             ->default('draft')
                             ->native(false),

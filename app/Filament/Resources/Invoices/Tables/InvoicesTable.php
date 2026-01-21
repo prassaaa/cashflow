@@ -60,16 +60,16 @@ class InvoicesTable
                     ->color(fn (string $state): string => match ($state) {
                         'draft' => 'gray',
                         'sent' => 'info',
-                        'partial' => 'warning',
                         'paid' => 'success',
                         'overdue' => 'danger',
+                        'cancelled' => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'draft' => 'Draft',
                         'sent' => 'Terkirim',
-                        'partial' => 'Sebagian',
                         'paid' => 'Lunas',
                         'overdue' => 'Jatuh Tempo',
+                        'cancelled' => 'Dibatalkan',
                     }),
             ])
             ->filters([
@@ -78,9 +78,9 @@ class InvoicesTable
                     ->options([
                         'draft' => 'Draft',
                         'sent' => 'Terkirim',
-                        'partial' => 'Sebagian',
                         'paid' => 'Lunas',
                         'overdue' => 'Jatuh Tempo',
+                        'cancelled' => 'Dibatalkan',
                     ]),
                 TrashedFilter::make(),
             ])
