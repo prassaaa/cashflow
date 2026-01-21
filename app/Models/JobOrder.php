@@ -13,12 +13,19 @@ class JobOrder extends Model
     protected $fillable = [
         'jo_number',
         'customer_name',
+        'pic',
         'project_name',
         'description',
+        'container_name',
+        'quantity',
+        'unit',
         'value',
         'order_date',
         'due_date',
         'status',
+        'pipa_status',
+        'carton_type',
+        'payment_status',
     ];
 
     protected function casts(): array
@@ -27,6 +34,7 @@ class JobOrder extends Model
             'value' => 'decimal:2',
             'order_date' => 'date',
             'due_date' => 'date',
+            'quantity' => 'integer',
         ];
     }
 

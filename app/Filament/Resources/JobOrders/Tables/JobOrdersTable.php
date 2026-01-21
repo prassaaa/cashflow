@@ -20,35 +20,79 @@ class JobOrdersTable
     {
         return $table
             ->columns([
-                TextColumn::make('jo_number')
-                    ->label('No. JO')
-                    ->searchable()
-                    ->sortable()
-                    ->copyable(),
+                TextColumn::make('order_date')
+                    ->label('Plan Date')
+                    ->date('d M Y')
+                    ->sortable(),
                 TextColumn::make('customer_name')
                     ->label('Customer')
                     ->searchable()
                     ->sortable()
-                    ->limit(30),
-                TextColumn::make('project_name')
-                    ->label('Project')
+                    ->limit(15),
+                TextColumn::make('pic')
+                    ->label('PIC')
+                    ->searchable()
+                    ->limit(15)
+                    ->toggleable(),
+                TextColumn::make('container_name')
+                    ->label('Container')
+                    ->searchable()
+                    ->limit(25)
+                    ->toggleable(),
+                TextColumn::make('quantity')
+                    ->label('Qty')
+                    ->sortable()
+                    ->alignEnd(),
+                TextColumn::make('unit')
+                    ->label('Unit')
+                    ->badge()
+                    ->color('gray'),
+                TextColumn::make('jo_number')
+                    ->label('JO')
                     ->searchable()
                     ->sortable()
-                    ->limit(30),
+                    ->copyable()
+                    ->badge()
+                    ->color('primary'),
+                TextColumn::make('pipa_status')
+                    ->label('Pipa')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'paid' => 'success',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'paid' => 'LUNAS',
+                        'pending' => 'Pending',
+                        default => '-',
+                    }),
+                TextColumn::make('carton_type')
+                    ->label('Carton')
+                    ->searchable()
+                    ->placeholder('-'),
+                TextColumn::make('payment_status')
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'unpaid' => 'danger',
+                        'partial' => 'warning',
+                        'paid' => 'success',
+                        default => 'gray',
+                    })
+                    ->formatStateUsing(fn (?string $state): string => match ($state) {
+                        'paid' => 'LUNAS',
+                        'partial' => 'Sebagian',
+                        'unpaid' => 'Belum Bayar',
+                        default => '-',
+                    }),
                 TextColumn::make('value')
                     ->label('Nilai')
                     ->money('IDR')
-                    ->sortable(),
-                TextColumn::make('order_date')
-                    ->label('Tgl Order')
-                    ->date('d M Y')
-                    ->sortable(),
-                TextColumn::make('due_date')
-                    ->label('Deadline')
-                    ->date('d M Y')
-                    ->sortable(),
+                    ->sortable()
+                    ->summarize(\Filament\Tables\Columns\Summarizers\Sum::make()->money('IDR')),
                 TextColumn::make('status')
-                    ->label('Status')
+                    ->label('Progress')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'pending' => 'warning',
@@ -58,14 +102,48 @@ class JobOrdersTable
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'pending' => 'Pending',
-                        'in_progress' => 'Dalam Proses',
+                        'in_progress' => 'Proses',
                         'completed' => 'Selesai',
-                        'cancelled' => 'Dibatalkan',
-                    }),
+                        'cancelled' => 'Batal',
+                    })
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('due_date')
+                    ->label('Deadline')
+                    ->date('d M Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('project_name')
+                    ->label('Project')
+                    ->searchable()
+                    ->limit(20)
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
+                SelectFilter::make('customer_name')
+                    ->label('Customer')
+                    ->searchable()
+                    ->preload()
+                    ->options(fn () => \App\Models\JobOrder::distinct()->pluck('customer_name', 'customer_name')->toArray()),
+                SelectFilter::make('pic')
+                    ->label('PIC')
+                    ->searchable()
+                    ->preload()
+                    ->options(fn () => \App\Models\JobOrder::whereNotNull('pic')->distinct()->pluck('pic', 'pic')->toArray()),
+                SelectFilter::make('payment_status')
+                    ->label('Payment')
+                    ->options([
+                        'unpaid' => 'Belum Bayar',
+                        'partial' => 'Sebagian',
+                        'paid' => 'LUNAS',
+                    ]),
+                SelectFilter::make('pipa_status')
+                    ->label('Pipa')
+                    ->options([
+                        'pending' => 'Pending',
+                        'paid' => 'LUNAS',
+                    ]),
                 SelectFilter::make('status')
-                    ->label('Status')
+                    ->label('Progress')
                     ->options([
                         'pending' => 'Pending',
                         'in_progress' => 'Dalam Proses',

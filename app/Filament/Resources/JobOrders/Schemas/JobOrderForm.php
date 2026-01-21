@@ -22,36 +22,75 @@ class JobOrderForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(50)
-                            ->placeholder('JO-001'),
+                            ->placeholder('JOGF-XXX-VIII-001'),
                         TextInput::make('customer_name')
-                            ->label('Nama Customer')
+                            ->label('Customer')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('pic')
+                            ->label('PIC')
+                            ->maxLength(255)
+                            ->placeholder('Person In Charge'),
                         TextInput::make('project_name')
                             ->label('Nama Project')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('container_name')
+                            ->label('Container')
+                            ->maxLength(255)
+                            ->placeholder('Nama Container'),
                         Textarea::make('description')
                             ->label('Deskripsi')
                             ->rows(3)
                             ->columnSpanFull(),
                     ])->columns(2),
-                Section::make('Nilai & Tanggal')
+                Section::make('Quantity & Nilai')
                     ->schema([
+                        TextInput::make('quantity')
+                            ->label('Qty')
+                            ->numeric()
+                            ->required()
+                            ->default(0)
+                            ->minValue(0),
+                        Select::make('unit')
+                            ->label('Satuan')
+                            ->options([
+                                'PC' => 'PC',
+                                'PP' => 'PP',
+                                'SET' => 'SET',
+                                'PCS' => 'PCS',
+                            ])
+                            ->default('PC')
+                            ->required()
+                            ->native(false),
                         TextInput::make('value')
-                            ->label('Nilai Order')
+                            ->label('Nilai')
                             ->numeric()
                             ->prefix('Rp')
                             ->required()
                             ->default(0),
+                        TextInput::make('carton_type')
+                            ->label('Carton')
+                            ->maxLength(100)
+                            ->placeholder('RSA, INHOUSE, dll'),
+                    ])->columns(4),
+                Section::make('Tanggal')
+                    ->schema([
                         DatePicker::make('order_date')
-                            ->label('Tanggal Order')
+                            ->label('Plan Date')
                             ->required()
-                            ->default(now()),
+                            ->default(now())
+                            ->native(false)
+                            ->displayFormat('d/m/Y'),
                         DatePicker::make('due_date')
-                            ->label('Tanggal Deadline'),
+                            ->label('Deadline')
+                            ->native(false)
+                            ->displayFormat('d/m/Y'),
+                    ])->columns(2),
+                Section::make('Status')
+                    ->schema([
                         Select::make('status')
-                            ->label('Status')
+                            ->label('Progress')
                             ->options([
                                 'pending' => 'Pending',
                                 'in_progress' => 'Dalam Proses',
@@ -59,8 +98,26 @@ class JobOrderForm
                                 'cancelled' => 'Dibatalkan',
                             ])
                             ->default('pending')
-                            ->required(),
-                    ])->columns(2),
+                            ->required()
+                            ->native(false),
+                        Select::make('pipa_status')
+                            ->label('Pipa')
+                            ->options([
+                                'pending' => 'Pending',
+                                'paid' => 'LUNAS',
+                            ])
+                            ->default('pending')
+                            ->native(false),
+                        Select::make('payment_status')
+                            ->label('Payment')
+                            ->options([
+                                'unpaid' => 'Belum Bayar',
+                                'partial' => 'Sebagian',
+                                'paid' => 'LUNAS',
+                            ])
+                            ->default('unpaid')
+                            ->native(false),
+                    ])->columns(3),
             ]);
     }
 }
