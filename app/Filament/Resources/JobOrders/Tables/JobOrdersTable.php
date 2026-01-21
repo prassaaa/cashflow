@@ -29,10 +29,11 @@ class JobOrdersTable
                     ->searchable()
                     ->sortable()
                     ->limit(15),
-                TextColumn::make('pic')
+                TextColumn::make('user.name')
                     ->label('PIC')
                     ->searchable()
                     ->limit(15)
+                    ->placeholder('-')
                     ->toggleable(),
                 TextColumn::make('container_name')
                     ->label('Container')
@@ -124,11 +125,11 @@ class JobOrdersTable
                     ->searchable()
                     ->preload()
                     ->options(fn () => \App\Models\JobOrder::distinct()->pluck('customer_name', 'customer_name')->toArray()),
-                SelectFilter::make('pic')
+                SelectFilter::make('user_id')
                     ->label('PIC')
+                    ->relationship('user', 'name', fn ($query) => $query->role('ppic'))
                     ->searchable()
-                    ->preload()
-                    ->options(fn () => \App\Models\JobOrder::whereNotNull('pic')->distinct()->pluck('pic', 'pic')->toArray()),
+                    ->preload(),
                 SelectFilter::make('payment_status')
                     ->label('Payment')
                     ->options([

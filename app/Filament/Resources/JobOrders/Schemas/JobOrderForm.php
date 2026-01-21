@@ -27,10 +27,16 @@ class JobOrderForm
                             ->label('Customer')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('pic')
+                        Select::make('user_id')
                             ->label('PIC')
-                            ->maxLength(255)
-                            ->placeholder('Person In Charge'),
+                            ->relationship(
+                                name: 'user',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn ($query) => $query->role('ppic')
+                            )
+                            ->searchable()
+                            ->preload()
+                            ->placeholder('Pilih PPIC'),
                         TextInput::make('project_name')
                             ->label('Nama Project')
                             ->required()

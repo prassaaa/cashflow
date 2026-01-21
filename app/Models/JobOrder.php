@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -13,7 +14,7 @@ class JobOrder extends Model
     protected $fillable = [
         'jo_number',
         'customer_name',
-        'pic',
+        'user_id',
         'project_name',
         'description',
         'container_name',
@@ -36,6 +37,11 @@ class JobOrder extends Model
             'due_date' => 'date',
             'quantity' => 'integer',
         ];
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function purchaseOrders(): HasMany
