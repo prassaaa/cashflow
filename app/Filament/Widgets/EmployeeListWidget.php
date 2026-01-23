@@ -34,18 +34,18 @@ class EmployeeListWidget extends ChartWidget
             ->where('type', 'daily')
             ->count();
 
-        $contract = Employee::where('status', 'active')
-            ->where('type', 'contract')
+        $borongan = Employee::where('status', 'active')
+            ->where('type', 'borongan')
             ->count();
 
         return [
             'datasets' => [
                 [
-                    'data' => [$staff, $daily, $contract],
+                    'data' => [$staff, $daily, $borongan],
                     'backgroundColor' => [
                         'rgb(34, 197, 94)',    // green - Staff
                         'rgb(251, 146, 60)',   // orange - Daily
-                        'rgb(59, 130, 246)',   // blue - Contract
+                        'rgb(59, 130, 246)',   // blue - Borongan
                     ],
                     'borderColor' => [
                         'rgb(34, 197, 94)',
@@ -55,7 +55,7 @@ class EmployeeListWidget extends ChartWidget
                     'borderWidth' => 2,
                 ],
             ],
-            'labels' => ['Staff (' . $staff . ')', 'Daily (' . $daily . ')', 'Contract (' . $contract . ')'],
+            'labels' => ['Staff (' . $staff . ')', 'Daily (' . $daily . ')', 'Borongan (' . $borongan . ')'],
         ];
     }
 
