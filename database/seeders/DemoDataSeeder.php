@@ -8,6 +8,7 @@ use App\Models\Expense;
 use App\Models\Invoice;
 use App\Models\JobOrder;
 use App\Models\ManPower;
+use App\Models\HrdAttendance;
 use App\Models\OtherCost;
 use App\Models\ProductionProgress;
 use App\Models\PurchaseOrder;
@@ -27,6 +28,9 @@ class DemoDataSeeder extends Seeder
 
         // Create Employees
         $employees = $this->createEmployees();
+
+        // Create HRD attendance recap
+        $this->createHrdAttendances();
 
         // Create Job Orders
         $jobOrders = $this->createJobOrders($ppicUsers);
@@ -120,7 +124,7 @@ class DemoDataSeeder extends Seeder
             [
                 'employee_number' => 'EMP-005',
                 'name' => 'Eko Prasetyo',
-                'type' => 'contract',
+                'type' => 'borongan',
                 'position' => 'Helper Produksi',
                 'department' => 'production',
                 'base_salary' => 4000000,
@@ -170,7 +174,7 @@ class DemoDataSeeder extends Seeder
             [
                 'employee_number' => 'EMP-010',
                 'name' => 'Joko Susilo',
-                'type' => 'contract',
+                'type' => 'borongan',
                 'position' => 'Driver',
                 'department' => 'warehouse',
                 'base_salary' => 4500000,
@@ -185,6 +189,24 @@ class DemoDataSeeder extends Seeder
         }
 
         return $employees;
+    }
+
+    private function createHrdAttendances(): void
+    {
+        $statuses = ['staff', 'daily', 'borongan'];
+
+        for ($i = 0; $i < 7; $i++) {
+            foreach ($statuses as $status) {
+                HrdAttendance::create([
+                    'date' => now()->subDays($i)->toDateString(),
+                    'status' => $status,
+                    'present_count' => rand(5, 20),
+                    'absent_count' => rand(0, 5),
+                    'deduction_count' => rand(0, 3),
+                    'new_hires_count' => $i === 0 ? rand(0, 2) : 0,
+                ]);
+            }
+        }
     }
 
     private function createJobOrders(array $ppicUsers): array

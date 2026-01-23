@@ -30,6 +30,7 @@ class RolesAndPermissionsSeeder extends Seeder
             'ManPower',
             'ProductionProgress',
             'Employee',
+            'HrdAttendance',
             'OtherCost',
         ];
 
@@ -62,10 +63,11 @@ class RolesAndPermissionsSeeder extends Seeder
             'super_admin' => '*', // All permissions
 
             'hrd' => [
-                // Full CRUD for Employee, ManPower, Salary
+                // Full CRUD for Employee, ManPower, Salary, HrdAttendance
                 'ViewAny:Employee', 'View:Employee', 'Create:Employee', 'Update:Employee', 'Delete:Employee',
                 'ViewAny:ManPower', 'View:ManPower', 'Create:ManPower', 'Update:ManPower', 'Delete:ManPower',
                 'ViewAny:Salary', 'View:Salary', 'Create:Salary', 'Update:Salary', 'Delete:Salary',
+                'ViewAny:HrdAttendance', 'View:HrdAttendance', 'Create:HrdAttendance', 'Update:HrdAttendance', 'Delete:HrdAttendance',
                 // View only for JobOrder
                 'ViewAny:JobOrder', 'View:JobOrder',
             ],
