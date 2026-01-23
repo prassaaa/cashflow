@@ -17,8 +17,11 @@ class ProductionProgress extends Model
         'report_date',
         'progress_percentage',
         'stage',
+        'material',
+        'packing',
         'description',
         'issues',
+        'solution',
     ];
 
     protected function casts(): array
