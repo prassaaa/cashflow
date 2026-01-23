@@ -199,7 +199,12 @@ FLOW LENGKAP:
    - [ ] Buat progress baru:
      - Job Order: Pilih JO yang ada
      - Stage: planning (awal produksi)
-     - Progress %: 0
+     - Status Achievement %: 0
+     - Material: (isi material)
+     - Proses: planning
+     - Packing: (isi metode/jenis packing)
+     - Problem: (jika ada)
+     - Solusi: (jika ada)
    - [ ] Simpan
 
 2. **Update Progress**
