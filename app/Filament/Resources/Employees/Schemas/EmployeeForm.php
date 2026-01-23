@@ -31,7 +31,7 @@ class EmployeeForm
                             ->required()
                             ->options([
                                 'staff' => 'Staff Tetap',
-                                'contract' => 'Kontrak',
+                                'borongan' => 'Borongan',
                                 'daily' => 'Harian',
                             ])
                             ->native(false),

@@ -34,14 +34,14 @@ class EmployeesTable
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'staff' => 'success',
-                        'contract' => 'info',
                         'daily' => 'warning',
+                        'borongan' => 'info',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'staff' => 'Staff Tetap',
-                        'contract' => 'Kontrak',
                         'daily' => 'Harian',
+                        'borongan' => 'Borongan',
                         default => $state,
                     }),
                 TextColumn::make('position')
@@ -87,8 +87,8 @@ class EmployeesTable
                     ->label('Tipe')
                     ->options([
                         'staff' => 'Staff Tetap',
-                        'contract' => 'Kontrak',
                         'daily' => 'Harian',
+                        'borongan' => 'Borongan',
                     ]),
                 SelectFilter::make('department')
                     ->label('Departemen')
