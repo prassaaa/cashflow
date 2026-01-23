@@ -86,20 +86,19 @@ class EmployeesTable
                 SelectFilter::make('type')
                     ->label('Tipe')
                     ->options([
-                        'permanent' => 'Tetap',
+                        'staff' => 'Staff Tetap',
                         'contract' => 'Kontrak',
                         'daily' => 'Harian',
-                        'freelance' => 'Freelance',
                     ]),
                 SelectFilter::make('department')
                     ->label('Departemen')
                     ->options([
                         'production' => 'Produksi',
-                        'sales' => 'Sales',
+                        'marketing' => 'Marketing',
                         'purchasing' => 'Purchasing',
-                        'finance' => 'Keuangan',
+                        'accounting' => 'Accounting',
                         'hrd' => 'HRD',
-                        'management' => 'Management',
+                        'warehouse' => 'Warehouse',
                     ]),
                 SelectFilter::make('status')
                     ->label('Status')
