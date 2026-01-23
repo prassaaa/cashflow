@@ -198,17 +198,16 @@ FLOW LENGKAP:
    - [ ] Klik menu "Production Progress"
    - [ ] Buat progress baru:
      - Job Order: Pilih JO yang ada
-     - Stage: cutting (awal produksi)
-     - Status: in_progress
+     - Stage: planning (awal produksi)
      - Progress %: 0
    - [ ] Simpan
 
 2. **Update Progress**
    - [ ] Edit progress yang dibuat
    - [ ] Update stage secara berurutan:
-     - cutting → assembling → finishing → quality_check → packing
-   - [ ] Update progress %: 25 → 50 → 75 → 100
-   - [ ] Set completed_at ketika 100%
+     - planning → material_prep → production → quality_check → finishing → packing → completed
+   - [ ] Update progress %: 10 → 30 → 60 → 75 → 90 → 100
+   - [ ] Pastikan stage = completed saat progress 100%
 
 #### Man Power Management
 1. **Assign Man Power**
@@ -232,12 +231,13 @@ FLOW LENGKAP:
      - Job Order: Pilih JO (status harus completed)
      - No. Surat Jalan: SJ-2026-TEST
      - Tanggal Delivery: Hari ini
-     - Status: pending
+     - Status: preparing
    - [ ] Simpan
 
 2. **Update Delivery Status**
-   - [ ] Update status: pending → in_transit → delivered
-   - [ ] Set tanggal delivered_at
+   - [ ] Update status: preparing → shipped → in_transit → delivered
+   - [ ] Set tanggal received_date saat delivered
+   - [ ] Jika perlu, gunakan status lain: returned / cancelled
 
 ---
 
@@ -419,15 +419,17 @@ Login: ppic@cashflow.test
    - Set jam kerja masing-masing
 
 2. Create Production Progress
-   - Start: cutting stage, 0%
-   - Update: assembling, 25%
-   - Update: finishing, 50%
-   - Update: quality_check, 75%
-   - Update: packing, 100%
+   - Start: planning stage, 0%
+   - Update: material_prep, 10%
+   - Update: production, 30%
+   - Update: quality_check, 60%
+   - Update: finishing, 75%
+   - Update: packing, 90%
+   - Update: completed, 100%
 
 3. Create Delivery
    - Buat surat jalan
-   - Update status: pending → in_transit → delivered
+   - Update status: preparing → shipped → in_transit → delivered
 
 
 STEP 5: ACCOUNTING - Financial Records
