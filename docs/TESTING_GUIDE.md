@@ -54,6 +54,7 @@
 | Production Progress | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Deliveries | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ |
 | Other Costs | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ |
+| Rekap HRD | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Users | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | Roles | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
@@ -166,14 +167,14 @@ FLOW LENGKAP:
      - No. PO: PO-2026-TEST
      - Job Order: Pilih JO yang ada
      - Nama Supplier: PT Supplier Test
-     - Kategori: material
+     - Kategori: jo_related
      - Nilai: 10000000
      - Status: pending
    - [ ] Simpan
 
 2. **Update PO Status**
    - [ ] Edit PO yang dibuat
-   - [ ] Ubah status: pending → approved → ordered → received
+   - [ ] Ubah status: pending → approved → received
    - [ ] Verifikasi setiap perubahan
 
 3. **Filter & Search**
@@ -266,7 +267,7 @@ FLOW LENGKAP:
 
 2. **Categorize Expenses**
    - [ ] Buat expense dengan kategori berbeda:
-     - operational, material, transport, utility, marketing, other
+     - operational, material, transport, utility, maintenance, other
    - [ ] Verifikasi di Expense Breakdown Chart
 
 #### Invoice Management
@@ -277,21 +278,22 @@ FLOW LENGKAP:
      - Amount: 50000000
      - Invoice Date: Hari ini
      - Due Date: 30 hari
-     - Status: unpaid
+     - Status: sent
 
 2. **Update Invoice Status**
-   - [ ] Update status invoice:
-     - unpaid → partial → paid
+   - [ ] Update paid_amount untuk pembayaran sebagian
+   - [ ] Update status: sent → paid
    - [ ] Set paid_date ketika paid
 
 3. **Track Overdue**
    - [ ] Buat invoice dengan due_date lampau
+   - [ ] Set status ke overdue
    - [ ] Verifikasi muncul di Overdue Invoices widget
 
 #### Other Costs
 1. **Create Other Cost**
    - [ ] Buat biaya lain-lain:
-     - Kategori: overhead/administrative/insurance/other
+     - Kategori: shipping/insurance/tax/permit/consultant/misc
      - Deskripsi: Biaya admin testing
      - Amount: 250000
 
@@ -401,22 +403,22 @@ STEP 2: PURCHASING - Create Purchase Orders
 ───────────────────────────────────────────
 Login: purchasing@cashflow.test
 
-1. Buat PO untuk material
+1. Buat PO untuk JO related
    - PO Number: PO-2026-001
    - Job Order: JO-2026-001
    - Supplier: PT Steel Indonesia
-   - Category: material
+   - Category: jo_related
    - Value: Rp 30.000.000
    - Status: pending
 
-2. Buat PO untuk consumable
+2. Buat PO untuk JO related (consumable)
    - PO Number: PO-2026-002
    - Job Order: JO-2026-001
    - Supplier: PT Welding Supply
-   - Category: consumable
+   - Category: jo_related
    - Value: Rp 5.000.000
 
-3. Update status PO: pending → approved → ordered → received
+3. Update status PO: pending → approved → received
 
 
 STEP 3: HRD - Setup Employees
@@ -460,11 +462,11 @@ Login: accounting@cashflow.test
 2. Create Invoice
    - Invoice Number: INV-2026-001
    - Amount: Rp 100.000.000
-   - Status: unpaid
+   - Status: sent
 
 3. Track Payment
-   - Update invoice: unpaid → partial (Rp 50.000.000)
-   - Update invoice: partial → paid
+   - Update paid_amount: Rp 50.000.000 (status tetap sent)
+   - Update status: sent → paid
 
 4. Review Cash Flow
    - Check Cash Flow Chart

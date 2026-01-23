@@ -39,8 +39,9 @@
 | **Purchase Orders** | Manajemen pembelian material, consumable, tools |
 | **Invoices** | Penagihan dan tracking pembayaran customer |
 | **Expenses** | Catat semua pengeluaran operasional |
-| **Employees** | Database karyawan (staff, daily, contract) |
+| **Employees** | Database karyawan (staff, daily, borongan) |
 | **Salaries** | Penggajian dengan approval workflow |
+| **Rekap HRD** | Rekap absensi HRD (hadir/absen/pengurangan/karyawan baru) |
 | **Man Powers** | Alokasi tenaga kerja per Job Order |
 | **Production Progress** | Tracking progress produksi per stage |
 | **Deliveries** | Manajemen pengiriman dan surat jalan |
@@ -164,6 +165,7 @@ php artisan db:seed --class=DemoDataSeeder
 | Invoices | ✅ | ✅ | ✅ | ❌ | ❌ | ❌ |
 | Employees | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Salaries | ✅ | ✅ | ❌ | ❌ | ✅ | ❌ |
+| Rekap HRD | ✅ | ❌ | ❌ | ❌ | ✅ | ❌ |
 | Man Powers | ✅ | ❌ | ❌ | ✅ | ✅ | ❌ |
 | Production Progress | ✅ | ❌ | ❌ | ✅ | ❌ | ❌ |
 | Deliveries | ✅ | ❌ | ✅ | ✅ | ❌ | ❌ |
