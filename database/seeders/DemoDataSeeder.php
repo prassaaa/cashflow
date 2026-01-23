@@ -537,11 +537,12 @@ class DemoDataSeeder extends Seeder
             ['stage' => 'production', 'progress' => 50],
             ['stage' => 'quality_check', 'progress' => 70],
             ['stage' => 'finishing', 'progress' => 90],
+            ['stage' => 'packing', 'progress' => 95],
             ['stage' => 'completed', 'progress' => 100],
         ];
 
         $maxStage = match (true) {
-            $index < 2 => 6,    // Completed - all stages
+            $index < 2 => 7,    // Completed - all stages
             $index < 5 => 4,    // In progress - up to QC
             $index < 7 => 2,    // Pending - up to material_prep
             default => 1,       // Draft - only planning
@@ -553,8 +554,11 @@ class DemoDataSeeder extends Seeder
                 'report_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +' . ($i * 3) . ' days')),
                 'progress_percentage' => $stages[$i]['progress'],
                 'stage' => $stages[$i]['stage'],
+                'material' => $stages[$i]['stage'] === 'material_prep' ? 'Bahan baku utama' : null,
+                'packing' => in_array($stages[$i]['stage'], ['packing', 'completed'], true) ? 'Carton standar' : null,
                 'description' => 'Progress tahap ' . ucfirst(str_replace('_', ' ', $stages[$i]['stage'])),
                 'issues' => $i === 2 && $index === 3 ? 'Terjadi delay karena mesin maintenance' : null,
+                'solution' => $i === 2 && $index === 3 ? 'Jadwalkan maintenance dan alihkan mesin cadangan' : null,
             ]);
         }
     }
