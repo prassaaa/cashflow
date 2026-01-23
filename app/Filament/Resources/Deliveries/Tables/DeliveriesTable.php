@@ -67,6 +67,7 @@ class DeliveriesTable
                         'in_transit' => 'warning',
                         'delivered' => 'success',
                         'returned' => 'danger',
+                        'cancelled' => 'danger',
                     })
                     ->formatStateUsing(fn (string $state): string => match ($state) {
                         'preparing' => 'Disiapkan',
@@ -74,6 +75,7 @@ class DeliveriesTable
                         'in_transit' => 'Dalam Perjalanan',
                         'delivered' => 'Diterima',
                         'returned' => 'Dikembalikan',
+                        'cancelled' => 'Dibatalkan',
                     }),
             ])
             ->filters([
@@ -85,6 +87,7 @@ class DeliveriesTable
                         'in_transit' => 'Dalam Perjalanan',
                         'delivered' => 'Diterima',
                         'returned' => 'Dikembalikan',
+                        'cancelled' => 'Dibatalkan',
                     ]),
                 SelectFilter::make('shipment_method')
                     ->label('Metode')
