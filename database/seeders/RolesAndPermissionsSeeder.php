@@ -106,10 +106,10 @@ class RolesAndPermissionsSeeder extends Seeder
                 // Full CRUD for ProductionProgress, ManPower
                 'ViewAny:ProductionProgress', 'View:ProductionProgress', 'Create:ProductionProgress', 'Update:ProductionProgress', 'Delete:ProductionProgress',
                 'ViewAny:ManPower', 'View:ManPower', 'Create:ManPower', 'Update:ManPower', 'Delete:ManPower',
-                // View only for JobOrder, PurchaseOrder, Delivery
+                // Create & update Delivery, view only for JobOrder & PurchaseOrder
                 'ViewAny:JobOrder', 'View:JobOrder',
                 'ViewAny:PurchaseOrder', 'View:PurchaseOrder',
-                'ViewAny:Delivery', 'View:Delivery',
+                'ViewAny:Delivery', 'View:Delivery', 'Create:Delivery', 'Update:Delivery',
             ],
         ];
 
