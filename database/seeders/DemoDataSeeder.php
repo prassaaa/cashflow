@@ -445,19 +445,19 @@ class DemoDataSeeder extends Seeder
     {
         $expenseData = [
             [
-                'category' => 'Material Produksi',
+                'category' => 'material',
                 'description' => 'Pembelian bahan baku produksi',
                 'amount' => $jobOrder->value * 0.2,
                 'status' => $index < 4 ? 'paid' : 'pending',
             ],
             [
-                'category' => 'Operasional',
+                'category' => 'operational',
                 'description' => 'Biaya operasional mesin',
                 'amount' => $jobOrder->value * 0.05,
                 'status' => $index < 3 ? 'paid' : 'pending',
             ],
             [
-                'category' => 'Transport',
+                'category' => 'transport',
                 'description' => 'Biaya pengiriman bahan',
                 'amount' => 500000,
                 'status' => $index < 4 ? 'paid' : 'pending',
@@ -591,12 +591,12 @@ class DemoDataSeeder extends Seeder
 
         $otherCostData = [
             [
-                'category' => 'Maintenance',
+                'category' => 'shipping',
                 'description' => 'Biaya maintenance mesin untuk produksi',
                 'amount' => 750000,
             ],
             [
-                'category' => 'Utilities',
+                'category' => 'tax',
                 'description' => 'Biaya listrik produksi',
                 'amount' => 500000,
             ],
