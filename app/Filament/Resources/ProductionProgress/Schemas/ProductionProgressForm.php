@@ -31,7 +31,7 @@ class ProductionProgressForm
                             ->displayFormat('d/m/Y')
                             ->default(now()),
                         TextInput::make('progress_percentage')
-                            ->label('Persentase Progress')
+                            ->label('Status Achievement %')
                             ->required()
                             ->numeric()
                             ->suffix('%')
@@ -39,7 +39,7 @@ class ProductionProgressForm
                             ->maxValue(100)
                             ->step(5),
                         Select::make('stage')
-                            ->label('Tahap')
+                            ->label('Proses')
                             ->required()
                             ->options([
                                 'planning' => 'Perencanaan',
@@ -51,6 +51,14 @@ class ProductionProgressForm
                                 'completed' => 'Selesai',
                             ])
                             ->native(false),
+                        TextInput::make('material')
+                            ->label('Material')
+                            ->maxLength(255)
+                            ->columnSpan(2),
+                        TextInput::make('packing')
+                            ->label('Packing')
+                            ->maxLength(255)
+                            ->columnSpan(2),
                     ]),
                 Section::make('Catatan')
                     ->columns(1)
@@ -59,9 +67,13 @@ class ProductionProgressForm
                             ->label('Deskripsi Progress')
                             ->rows(3),
                         Textarea::make('issues')
-                            ->label('Kendala/Issue')
+                            ->label('Problem')
                             ->rows(3)
                             ->helperText('Kosongkan jika tidak ada kendala'),
+                        Textarea::make('solution')
+                            ->label('Solusi')
+                            ->rows(3)
+                            ->helperText('Kosongkan jika belum ada solusi'),
                     ]),
             ]);
     }
