@@ -65,6 +65,7 @@ class DeliveryForm
                                 'in_transit' => 'Dalam Perjalanan',
                                 'delivered' => 'Diterima',
                                 'returned' => 'Dikembalikan',
+                                'cancelled' => 'Dibatalkan',
                             ])
                             ->default('preparing')
                             ->native(false),
