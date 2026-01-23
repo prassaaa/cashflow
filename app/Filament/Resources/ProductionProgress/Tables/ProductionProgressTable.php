@@ -35,7 +35,7 @@ class ProductionProgressTable
                     ->date('d M Y')
                     ->sortable(),
                 TextColumn::make('progress_percentage')
-                    ->label('Progress')
+                    ->label('Achievement %')
                     ->suffix('%')
                     ->sortable()
                     ->color(fn ($state): string => match (true) {
@@ -46,7 +46,7 @@ class ProductionProgressTable
                     })
                     ->badge(),
                 TextColumn::make('stage')
-                    ->label('Tahap')
+                    ->label('Proses')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
                         'planning' => 'gray',
@@ -66,10 +66,25 @@ class ProductionProgressTable
                         'packing' => 'Packing',
                         'completed' => 'Selesai',
                     }),
+                TextColumn::make('material')
+                    ->label('Material')
+                    ->limit(25)
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('packing')
+                    ->label('Packing')
+                    ->limit(25)
+                    ->placeholder('-')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('issues')
-                    ->label('Kendala')
+                    ->label('Problem')
                     ->limit(30)
                     ->placeholder('Tidak ada')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('solution')
+                    ->label('Solusi')
+                    ->limit(30)
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
