@@ -320,7 +320,7 @@ FLOW LENGKAP:
      - NIK: EMP-2026-TEST
      - Nama: Test Employee
      - Posisi: Operator
-     - Tipe: staff/daily/contract
+     - Tipe: staff/daily/borongan
      - Gaji Harian: 150000
      - Tanggal Masuk: Hari ini
      - Status: active
@@ -361,6 +361,18 @@ FLOW LENGKAP:
 #### Man Power Review
 - [ ] Lihat data man power
 - [ ] Verifikasi jam kerja karyawan
+
+#### Rekap HRD (Absensi)
+1. **Create Rekap**
+   - [ ] Klik menu "Rekap HRD"
+   - [ ] Input data:
+     - Tanggal: Hari ini
+     - Status: staff/daily/borongan
+     - Jumlah Hadir
+     - Jumlah Absen
+     - Jumlah Pengurangan
+     - Jumlah Karyawan Baru
+   - [ ] Simpan
 
 ---
 
