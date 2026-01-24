@@ -5,10 +5,10 @@ namespace Database\Seeders;
 use App\Models\Delivery;
 use App\Models\Employee;
 use App\Models\Expense;
+use App\Models\HrdAttendance;
 use App\Models\Invoice;
 use App\Models\JobOrder;
 use App\Models\ManPower;
-use App\Models\HrdAttendance;
 use App\Models\OtherCost;
 use App\Models\ProductionProgress;
 use App\Models\PurchaseOrder;
@@ -429,13 +429,13 @@ class DemoDataSeeder extends Seeder
         foreach ($poData as $i => $data) {
             PurchaseOrder::create([
                 'job_order_id' => $jobOrder->id,
-                'po_number' => 'PO-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + $i + 1, 4, '0', STR_PAD_LEFT),
+                'po_number' => 'PO-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad(($index * 2) + $i + 1, 4, '0', STR_PAD_LEFT),
                 'supplier_name' => $data['supplier_name'],
                 'category' => $data['category'],
                 'description' => $data['description'],
                 'value' => $data['value'],
                 'po_date' => $jobOrder->order_date,
-                'expected_delivery_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +7 days')),
+                'expected_delivery_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +7 days')),
                 'status' => $data['status'],
             ]);
         }
@@ -467,11 +467,11 @@ class DemoDataSeeder extends Seeder
         foreach ($expenseData as $i => $data) {
             Expense::create([
                 'job_order_id' => $jobOrder->id,
-                'expense_number' => 'EXP-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 3) + $i + 1, 4, '0', STR_PAD_LEFT),
+                'expense_number' => 'EXP-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad(($index * 3) + $i + 1, 4, '0', STR_PAD_LEFT),
                 'category' => $data['category'],
                 'description' => $data['description'],
                 'amount' => $data['amount'],
-                'expense_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +' . ($i * 3) . ' days')),
+                'expense_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +'.($i * 3).' days')),
                 'status' => $data['status'],
             ]);
         }
@@ -489,14 +489,14 @@ class DemoDataSeeder extends Seeder
 
         Invoice::create([
             'job_order_id' => $jobOrder->id,
-            'invoice_number' => 'INV-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + 1, 4, '0', STR_PAD_LEFT),
+            'invoice_number' => 'INV-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad(($index * 2) + 1, 4, '0', STR_PAD_LEFT),
             'amount' => $dpAmount,
             'invoice_date' => $jobOrder->order_date,
-            'due_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +14 days')),
-            'paid_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date . ' +7 days')) : null,
+            'due_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +14 days')),
+            'paid_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date.' +7 days')) : null,
             'status' => $index < 4 ? 'paid' : ($index < 6 ? 'sent' : 'draft'),
             'notes' => 'Invoice DP 30%',
-            'shipped_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date . ' +3 days')) : null,
+            'shipped_date' => $index < 4 ? date('Y-m-d', strtotime($jobOrder->order_date.' +3 days')) : null,
             'shipper' => $shippers[array_rand($shippers)],
             'buyer' => $jobOrder->customer_name,
             'po_number' => $poNumbers[array_rand($poNumbers)],
@@ -513,14 +513,14 @@ class DemoDataSeeder extends Seeder
 
             Invoice::create([
                 'job_order_id' => $jobOrder->id,
-                'invoice_number' => 'INV-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + 2, 4, '0', STR_PAD_LEFT),
+                'invoice_number' => 'INV-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad(($index * 2) + 2, 4, '0', STR_PAD_LEFT),
                 'amount' => $finalAmount,
-                'invoice_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' -7 days')),
-                'due_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' +7 days')),
-                'paid_date' => $index < 2 ? date('Y-m-d', strtotime($jobOrder->due_date . ' +3 days')) : null,
+                'invoice_date' => date('Y-m-d', strtotime($jobOrder->due_date.' -7 days')),
+                'due_date' => date('Y-m-d', strtotime($jobOrder->due_date.' +7 days')),
+                'paid_date' => $index < 2 ? date('Y-m-d', strtotime($jobOrder->due_date.' +3 days')) : null,
                 'status' => $index < 2 ? 'paid' : 'sent',
                 'notes' => 'Invoice Pelunasan 70%',
-                'shipped_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' -2 days')),
+                'shipped_date' => date('Y-m-d', strtotime($jobOrder->due_date.' -2 days')),
                 'shipper' => $shippers[array_rand($shippers)],
                 'buyer' => $jobOrder->customer_name,
                 'po_number' => $poNumbers[array_rand($poNumbers)],
@@ -541,11 +541,11 @@ class DemoDataSeeder extends Seeder
 
         Delivery::create([
             'job_order_id' => $jobOrder->id,
-            'delivery_number' => 'DO-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad($index + 1, 4, '0', STR_PAD_LEFT),
+            'delivery_number' => 'DO-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad($index + 1, 4, '0', STR_PAD_LEFT),
             'shipment_method' => $methods[array_rand($methods)],
-            'tracking_number' => $index < 5 ? 'TRK' . strtoupper(substr(md5($jobOrder->jo_number), 0, 10)) : null,
-            'delivery_date' => date('Y-m-d', strtotime($jobOrder->due_date . ' -3 days')),
-            'received_date' => $index < 2 ? date('Y-m-d', strtotime($jobOrder->due_date . ' -1 days')) : null,
+            'tracking_number' => $index < 5 ? 'TRK'.strtoupper(substr(md5($jobOrder->jo_number), 0, 10)) : null,
+            'delivery_date' => date('Y-m-d', strtotime($jobOrder->due_date.' -3 days')),
+            'received_date' => $index < 2 ? date('Y-m-d', strtotime($jobOrder->due_date.' -1 days')) : null,
             'status' => $index < 2 ? 'delivered' : ($index < 4 ? 'shipped' : 'preparing'),
             'notes' => 'Pengiriman ke alamat customer',
         ]);
@@ -573,12 +573,12 @@ class DemoDataSeeder extends Seeder
         for ($i = 0; $i < $maxStage; $i++) {
             ProductionProgress::create([
                 'job_order_id' => $jobOrder->id,
-                'report_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +' . ($i * 3) . ' days')),
+                'report_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +'.($i * 3).' days')),
                 'progress_percentage' => $stages[$i]['progress'],
                 'stage' => $stages[$i]['stage'],
                 'material' => $stages[$i]['stage'] === 'material_prep' ? 'Bahan baku utama' : null,
                 'packing' => in_array($stages[$i]['stage'], ['packing', 'completed'], true) ? 'Carton standar' : null,
-                'description' => 'Progress tahap ' . ucfirst(str_replace('_', ' ', $stages[$i]['stage'])),
+                'description' => 'Progress tahap '.ucfirst(str_replace('_', ' ', $stages[$i]['stage'])),
                 'issues' => $i === 2 && $index === 3 ? 'Terjadi delay karena mesin maintenance' : null,
                 'solution' => $i === 2 && $index === 3 ? 'Jadwalkan maintenance dan alihkan mesin cadangan' : null,
             ]);
@@ -606,11 +606,11 @@ class DemoDataSeeder extends Seeder
             if ($index < 5) { // Only for non-draft JOs
                 OtherCost::create([
                     'job_order_id' => $jobOrder->id,
-                    'cost_number' => 'OC-' . date('Y', strtotime($jobOrder->order_date)) . '-' . str_pad(($index * 2) + $i + 1, 4, '0', STR_PAD_LEFT),
+                    'cost_number' => 'OC-'.date('Y', strtotime($jobOrder->order_date)).'-'.str_pad(($index * 2) + $i + 1, 4, '0', STR_PAD_LEFT),
                     'category' => $data['category'],
                     'description' => $data['description'],
                     'amount' => $data['amount'],
-                    'cost_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +' . ($i * 5) . ' days')),
+                    'cost_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +'.($i * 5).' days')),
                     'status' => $index < 3 ? 'paid' : 'approved',
                 ]);
             }
@@ -623,7 +623,7 @@ class DemoDataSeeder extends Seeder
             return; // No manpower for newest drafts
         }
 
-        $productionEmployees = array_filter($employees, fn($e) => $e->department === 'production');
+        $productionEmployees = array_filter($employees, fn ($e) => $e->department === 'production');
         $productionEmployees = array_values($productionEmployees);
 
         $daysWorked = match (true) {
@@ -634,18 +634,41 @@ class DemoDataSeeder extends Seeder
 
         for ($day = 0; $day < $daysWorked; $day++) {
             $employee = $productionEmployees[array_rand($productionEmployees)];
-            $hoursWorked = rand(6, 10);
-            $ratePerHour = 50000;
 
-            ManPower::create([
-                'job_order_id' => $jobOrder->id,
-                'employee_id' => $employee->id,
-                'work_date' => date('Y-m-d', strtotime($jobOrder->order_date . ' +' . ($day + 1) . ' days')),
-                'hours_worked' => $hoursWorked,
-                'rate_per_hour' => $ratePerHour,
-                'total_cost' => $hoursWorked * $ratePerHour,
-                'description' => 'Pekerjaan produksi hari ke-' . ($day + 1),
-            ]);
+            // Determine payment type based on employee type
+            if ($employee->type === 'borongan') {
+                $quantity = rand(10, 50);
+                $ratePerUnit = rand(5000, 15000);
+
+                ManPower::create([
+                    'job_order_id' => $jobOrder->id,
+                    'employee_id' => $employee->id,
+                    'work_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +'.($day + 1).' days')),
+                    'payment_type' => 'borongan',
+                    'hours_worked' => 0,
+                    'rate_per_hour' => 0,
+                    'quantity' => $quantity,
+                    'rate_per_unit' => $ratePerUnit,
+                    'total_cost' => $quantity * $ratePerUnit,
+                    'description' => 'Pekerjaan borongan hari ke-'.($day + 1),
+                ]);
+            } else {
+                $hoursWorked = rand(6, 10);
+                $ratePerHour = 50000;
+
+                ManPower::create([
+                    'job_order_id' => $jobOrder->id,
+                    'employee_id' => $employee->id,
+                    'work_date' => date('Y-m-d', strtotime($jobOrder->order_date.' +'.($day + 1).' days')),
+                    'payment_type' => 'hourly',
+                    'hours_worked' => $hoursWorked,
+                    'rate_per_hour' => $ratePerHour,
+                    'quantity' => 0,
+                    'rate_per_unit' => 0,
+                    'total_cost' => $hoursWorked * $ratePerHour,
+                    'description' => 'Pekerjaan produksi hari ke-'.($day + 1),
+                ]);
+            }
         }
     }
 
@@ -681,7 +704,7 @@ class DemoDataSeeder extends Seeder
                 'overtime' => $overtime,
                 'deduction' => $deduction,
                 'total' => $total,
-                'payment_date' => $index < 3 ? date('Y-m-d', strtotime($period . '-25')) : null,
+                'payment_date' => $index < 3 ? date('Y-m-d', strtotime($period.'-25')) : null,
                 'status' => $index < 3 ? 'paid' : ($index < 4 ? 'approved' : 'pending'),
             ]);
         }
