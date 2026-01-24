@@ -37,6 +37,21 @@ class ManPowerForm
                             ->required()
                             ->native(false)
                             ->displayFormat('d/m/Y'),
+                        Select::make('payment_type')
+                            ->label('Tipe Pembayaran')
+                            ->required()
+                            ->options([
+                                'hourly' => 'Per Jam',
+                                'borongan' => 'Borongan',
+                            ])
+                            ->default('hourly')
+                            ->native(false)
+                            ->live()
+                            ->afterStateUpdated(fn (Set $set) => self::resetFields($set)),
+                    ]),
+                Section::make('Jam Kerja')
+                    ->columns(2)
+                    ->schema([
                         TextInput::make('hours_worked')
                             ->label('Jam Kerja')
                             ->required()
@@ -46,10 +61,6 @@ class ManPowerForm
                             ->step(0.5)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn (Get $get, Set $set) => self::calculateTotal($get, $set)),
-                    ]),
-                Section::make('Biaya')
-                    ->columns(3)
-                    ->schema([
                         TextInput::make('rate_per_hour')
                             ->label('Tarif per Jam')
                             ->required()
@@ -58,6 +69,32 @@ class ManPowerForm
                             ->minValue(0)
                             ->live(onBlur: true)
                             ->afterStateUpdated(fn (Get $get, Set $set) => self::calculateTotal($get, $set)),
+                    ])
+                    ->visible(fn (Get $get): bool => $get('payment_type') === 'hourly'),
+                Section::make('Borongan')
+                    ->columns(2)
+                    ->schema([
+                        TextInput::make('quantity')
+                            ->label('Jumlah Unit')
+                            ->required()
+                            ->numeric()
+                            ->suffix('unit')
+                            ->minValue(0)
+                            ->step(0.5)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (Get $get, Set $set) => self::calculateTotal($get, $set)),
+                        TextInput::make('rate_per_unit')
+                            ->label('Tarif per Unit')
+                            ->required()
+                            ->numeric()
+                            ->prefix('Rp')
+                            ->minValue(0)
+                            ->live(onBlur: true)
+                            ->afterStateUpdated(fn (Get $get, Set $set) => self::calculateTotal($get, $set)),
+                    ])
+                    ->visible(fn (Get $get): bool => $get('payment_type') === 'borongan'),
+                Section::make('Total')
+                    ->schema([
                         TextInput::make('total_cost')
                             ->label('Total Biaya')
                             ->required()
@@ -75,12 +112,29 @@ class ManPowerForm
             ]);
     }
 
+    public static function resetFields(Set $set): void
+    {
+        $set('hours_worked', 0);
+        $set('rate_per_hour', 0);
+        $set('quantity', 0);
+        $set('rate_per_unit', 0);
+        $set('total_cost', 0);
+    }
+
     public static function calculateTotal(Get $get, Set $set): void
     {
-        $hours = (float) ($get('hours_worked') ?? 0);
-        $rate = (float) ($get('rate_per_hour') ?? 0);
+        $paymentType = $get('payment_type') ?? 'hourly';
 
-        $total = $hours * $rate;
+        if ($paymentType === 'hourly') {
+            $hours = (float) ($get('hours_worked') ?? 0);
+            $rate = (float) ($get('rate_per_hour') ?? 0);
+            $total = $hours * $rate;
+        } else {
+            $quantity = (float) ($get('quantity') ?? 0);
+            $rate = (float) ($get('rate_per_unit') ?? 0);
+            $total = $quantity * $rate;
+        }
+
         $set('total_cost', $total);
     }
 }
