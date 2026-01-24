@@ -14,8 +14,11 @@ class ManPower extends Model
         'job_order_id',
         'employee_id',
         'work_date',
+        'payment_type',
         'hours_worked',
         'rate_per_hour',
+        'quantity',
+        'rate_per_unit',
         'total_cost',
         'description',
     ];
@@ -26,6 +29,8 @@ class ManPower extends Model
             'work_date' => 'date',
             'hours_worked' => 'decimal:2',
             'rate_per_hour' => 'decimal:2',
+            'quantity' => 'decimal:2',
+            'rate_per_unit' => 'decimal:2',
             'total_cost' => 'decimal:2',
         ];
     }
